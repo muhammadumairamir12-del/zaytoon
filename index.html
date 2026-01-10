@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -680,6 +681,61 @@
             color: var(--primary);
         }
 
+        /* Subscribe Button Styles */
+        .subscribe-section {
+            background-color: var(--light); /* Ensure matching background */
+            text-align: center;
+        }
+
+        .subscribe-btn {
+            background: var(--gradient-green);
+            color: var(--white);
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            box-shadow: 0 10px 30px rgba(46, 125, 50, 0.4);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .subscribe-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.6);
+        }
+
+        .subscribe-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.7s ease-in-out;
+        }
+
+        .subscribe-btn:hover::before {
+            left: 100%;
+        }
+
+        .subscribe-btn i {
+            margin-right: 10px;
+        }
+
+        /* Subscription status message */
+        #subscription-status {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
         /* Developer Section */
         .royal-font {
             font-family: 'Cormorant Garamond', serif;
@@ -1434,6 +1490,21 @@
         </div>
     </section>
 
+    <!-- Subscribe Section -->
+    <section class="subscribe-section section-padding" style="background-color: var(--light);" id="subscribe">
+        <div class="container text-center" data-aos="fade-up">
+            <div class="section-title">
+                <div class="subtitle">Stay Updated</div>
+                <h2>Get Notified for New Menu Items!</h2>
+                <p class="lead text-muted">Be the first to know about our latest delicious additions and special offers.</p>
+            </div>
+            <button class="subscribe-btn" id="subscribe-button">
+                <i class="fas fa-bell me-2"></i> Subscribe for Updates
+            </button>
+            <p id="subscription-status" class="mt-3 text-muted"></p>
+        </div>
+    </section>
+
     <!-- Contact & Location Section -->
     <section class="section-padding bg-white" id="contact">
         <div class="container">
@@ -1761,10 +1832,12 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, updateDoc, doc, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+        // NEW: Firebase Messaging SDK ko import karo
+        import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
 
-        // Firebase Configuration
+        // Firebase Configuration (Tumhari existing config)
         const firebaseConfig = {
             apiKey: "AIzaSyAgf_93FAEiR0HSweqrBSwvF1qufSDxryk",
             authDomain: "zfc-restaurant.firebaseapp.com",
@@ -1779,6 +1852,111 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
+        // 🚨 IMPORTANT: Apni ACTUAL VAPID key yahan paste karo!
+        // Ye key Firebase Console > Project settings > Cloud Messaging > Web configuration > Web Push certificates se milegi.
+        const messaging = getMessaging(app);
+        const VAPID_KEY = "YOUR_FCM_VAPID_KEY_HERE"; 
+
+        // Function: User ko notifications ke liye subscribe karna
+        async function subscribeUser() {
+            const statusElement = document.getElementById('subscription-status');
+            statusElement.textContent = "Notifications ki permission maangi ja rahi hai...";
+
+            try {
+                // User se notification ki permission maango
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    statusElement.textContent = "Permission mil gayi. Subscription token generate ho raha hai...";
+                    // FCM registration token hasil karo
+                    const token = await getToken(messaging, { vapidKey: VAPID_KEY });
+
+                    if (token) {
+                        console.log('FCM registration token:', token);
+                        // Token ko Firestore database mein save karo
+                        await saveTokenToFirestore(token);
+                        statusElement.textContent = "Aap subscribe ho chuke hain! Naye menu items ki updates milengi.";
+                        document.getElementById('subscribe-button').disabled = true; // Subscribe hone ke baad button disable kar do
+                        document.getElementById('subscribe-button').textContent = "Subscribed!";
+                    } else {
+                        statusElement.textContent = "Koi registration token nahi mila. Permission dobara maangen.";
+                        showNotification("Subscription token hasil karne mein nakami.", "error");
+                    }
+                } else if (permission === 'denied') {
+                    statusElement.textContent = "Notification permission deny kar di gayi hai. Aapko updates nahi milengi.";
+                    showNotification("Notification permission deny kar di gayi.", "error");
+                } else { // 'default' ya dismissed
+                    statusElement.textContent = "Notification permission ignore kar di gayi.";
+                    showNotification("Notification permission ignore kar di gayi.", "error");
+                }
+            } catch (error) {
+                console.error('User ko subscribe karne mein error:', error);
+                statusElement.textContent = `Subscribe karne mein error: ${error.message}`;
+                showNotification(`Subscribe karne mein error: ${error.message}`, "error");
+            }
+        }
+
+        // Function: FCM token ko Firestore mein save karna
+        async function saveTokenToFirestore(token) {
+            try {
+                // Pehle check karo agar token pehle se mojood hai to duplicate save na ho
+                const q = query(collection(db, 'subscribers'), where('token', '==', token));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    await addDoc(collection(db, 'subscribers'), {
+                        token: token,
+                        timestamp: new Date().toISOString()
+                    });
+                    console.log('FCM token Firestore mein save ho gaya.');
+                } else {
+                    console.log('FCM token pehle se hi Firestore mein mojood hai.');
+                }
+            } catch (error) {
+                console.error('FCM token Firestore mein save karne mein error:', error);
+            }
+        }
+
+        // Jab user website par ho aur message aaye to handle karo (foreground messages)
+        onMessage(messaging, (payload) => {
+            console.log('Message received. ', payload);
+            // Notification ko customize karo aur dikhao
+            const notificationTitle = payload.notification.title;
+            const notificationOptions = {
+                body: payload.notification.body,
+                icon: payload.notification.icon || '/favicon.ico', // Custom icon ya default icon
+                image: payload.notification.image || undefined, // Custom image agar provide kiya ho
+                badge: '/favicon.ico', // Notification bar ke liye chhota icon
+                data: payload.data // Koi bhi custom data pass karne ke liye
+            };
+
+            // Notification display karo
+            if (Notification.permission === 'granted') {
+                new Notification(notificationTitle, notificationOptions);
+            } else {
+                // Agar permission granted nahi hai to custom toast notification dikhao
+                showNotification(`Nayi Update: ${payload.notification.title} - ${payload.notification.body}`, 'success');
+            }
+        });
+
+        // Window load hone par subscribe button par event listener lagao
+        window.addEventListener('load', () => {
+            // ... (Tumhara existing load logic) ...
+            document.getElementById('subscribe-button').addEventListener('click', subscribeUser);
+            // Check karo agar user pehle se subscribe hai to button ko update karo
+            if (Notification.permission === 'granted') {
+                getToken(messaging, { vapidKey: VAPID_KEY }).then(token => {
+                    if (token) {
+                        document.getElementById('subscription-status').textContent = "Aap pehle se subscribe hain!";
+                        document.getElementById('subscribe-button').disabled = true;
+                        document.getElementById('subscribe-button').textContent = "Subscribed!";
+                    }
+                }).catch(error => {
+                    console.error("Existing subscription check karne mein error:", error);
+                });
+            }
+        });
+
+
         // Menu Data
         const menuItems = [
             { id: 1, name: "Zinger Burger", price: 850, category: "fast-food", description: "Crispy chicken fillet", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" },
@@ -1789,6 +1967,466 @@
             { id: 6, name: "Chicken Tikka", price: 1200, category: "bbq", description: "Marinated chicken", image: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500" },
             { id: 7, name: "Lava Cake", price: 750, category: "dessert", description: "Chocolate cake", image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500" },
             { id: 8, name: "Mint Margarita", price: 350, category: "drinks", description: "Refreshing drink", image: "https://images.unsplash.com/photo-1546173159-315724a31696?w=500" },
+
+            {
+            
+             id: 9,
+                name: "Club Sandwich Max",
+                price: 750,
+                category: "fast-food",
+                description: "Triple decker sandwich with chicken and vegetables",
+                image: "https://images.pexels.com/photos/1600727/pexels-photo-1600727.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 10,
+                name: "Chicken Biryani Full",
+                price: 950,
+                category: "main",
+                description: "Aromatic basmati rice with tender chicken",
+                image: "https://images.pexels.com/photos/7394851/pexels-photo-7394851.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 12,
+                name: "Chicken Tikka BBQ",
+                price: 1600,
+                category: "bbq",
+                description: "Marinated chicken pieces grilled to perfection",
+                image: "https://images.pexels.com/photos/5410400/pexels-photo-5410400.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 13,
+                name: "Special Fish Fry",
+                price: 1800,
+                category: "main",
+                description: "Fresh fish marinated and fried with spices",
+                image: "https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 14,
+                name: "Mango Shake",
+                price: 400,
+                category: "drinks",
+                description: "Thick and creamy mango shake",
+                image: "https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 15,
+                name: "Beef Burger Deluxe",
+                price: 850,
+                category: "fast-food",
+                description: "Juicy beef patty with fresh toppings",
+                image: "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 16,
+                name: "Malai Boti",
+                price: 1500,
+                category: "bbq",
+                description: "Creamy marinated chicken tikka",
+                image: "https://images.pexels.com/photos/6210876/pexels-photo-6210876.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 17,
+                name: "Gulab Jamun",
+                price: 500,
+                category: "dessert",
+                description: "Traditional sweet dumplings in sugar syrup",
+                image: "https://images.pexels.com/photos/4087611/pexels-photo-4087611.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 18,
+                name: "Fresh Lime Soda",
+                price: 300,
+                category: "drinks",
+                description: "Refreshing lime drink with soda",
+                image: "https://images.pexels.com/photos/1233319/pexels-photo-1233319.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 19,
+                name: "ZFC Royal Mutton Karahi",
+                price: 3800,
+                category: "main",
+                description: "Premium mutton cooked in traditional desi ghee with secret ZFC spices.",
+                image: "https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 20,
+                name: "Executive T-Bone Steak",
+                price: 4500,
+                category: "main",
+                description: "Prime cut beef steak served with grilled vegetables and mushroom sauce.",
+                image: "https://images.pexels.com/photos/675951/pexels-photo-675951.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 21,
+                name: "Jumbo Grilled Prawns",
+                price: 5200,
+                category: "bbq",
+                description: "Fresh jumbo prawns marinated in lemon butter and charcoal grilled.",
+                image: "https://images.pexels.com/photos/566344/pexels-photo-566344.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 22,
+                name: "Whole Stuffed Sajji",
+                price: 2800,
+                category: "main",
+                description: "Full chicken stuffed with aromatic rice and slow-roasted over charcoal.",
+                image: "https://images.pexels.com/photos/233305/pexels-photo-233305.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 23,
+                name: "Grand ZFC BBQ Platter",
+                price: 4800,
+                category: "bbq",
+                description: "A royal mix of Kababs, Tikka, Malai Boti, and Chops for the whole family.",
+                image: "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 24,
+                name: "Beef Wellington Exclusive",
+                price: 6500,
+                category: "main",
+                description: "Tender beef fillet wrapped in puff pastry with mushroom duxelles.",
+                image: "https://images.pexels.com/photos/7613568/pexels-photo-7613568.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 25,
+                name: "Mutton Kunna Clay Pot",
+                price: 3400,
+                category: "main",
+                description: "Traditional Chinioti Mutton Kunna slow-cooked in a clay pot for 6 hours.",
+                image: "https://images.pexels.com/photos/106343/pexels-photo-106343.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 26,
+                name: "Grilled Lobster Tail",
+                price: 6800,
+                category: "main",
+                description: "Premium lobster tail served with garlic butter sauce and saffron rice.",
+                image: "https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 27,
+                name: "Turkish Adana Kebab Platter",
+                price: 3500,
+                category: "bbq",
+                description: "Authentic spicy Turkish minced meat kebabs served with pita and hummus.",
+                image: "https://images.pexels.com/photos/5946633/pexels-photo-5946633.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 28,
+                name: "Desi Ghee Lamb Chops",
+                price: 4200,
+                category: "bbq",
+                description: "Juicy lamb chops marinated in yogurt and pan-fried in pure desi ghee.",
+                image: "https://images.pexels.com/photos/410648/pexels-photo-410648.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 29,
+                name: "College Hangout Deal",
+                price: 2800,
+                category: "main",
+                description: "4 ZFC Burgers, 2 Jumbo Fries, and 1.5L Coke. Best for college friends and groups.",
+                image: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 30,
+                name: "Romantic Dinner Date",
+                price: 5500,
+                category: "main",
+                description: "2 Premium Steaks, 1 Chocolate Lava Cake, and 2 Mint Margaritas. Includes table decoration.",
+                image: "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 31,
+                name: "Royal Family Feast",
+                price: 12500,
+                category: "main",
+                description: "Full Mutton Karahi, 2 Large Pizzas, BBQ Platter, 2L Drinks, and 12 Gulab Jamuns. Serves 6-8.",
+                image: "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 32,
+                name: "Executive Business Buffet",
+                price: 4500,
+                category: "main",
+                description: "Unlimited BBQ, 3 types of Handi, Chinese, Salad Bar, and Tea. Perfect for corporate meetings.",
+                image: "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 33,
+                name: "ZFC Birthday Blast Pack",
+                price: 15000,
+                category: "main",
+                description: "Party for 10! Mixed BBQ, Fast Food Platter, Customized Cake, and unlimited soft drinks.",
+                image: "https://images.pexels.com/photos/587741/pexels-photo-587741.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 34,
+                name: "Couple's BBQ Night",
+                price: 3200,
+                category: "bbq",
+                description: "Seekh Kabab, Malai Boti, Chicken Tikka, Raita, and Hot Naans. Specially for two.",
+                image: "https://images.pexels.com/photos/5410400/pexels-photo-5410400.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 35,
+                name: "Weekend Brunch Group",
+                price: 4800,
+                category: "main",
+                description: "Special Halwa Puri, Nihari, Paye, and Lassi for a group of 4. Only on Saturday/Sunday.",
+                image: "https://images.pexels.com/photos/103124/pexels-photo-103124.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 36,
+                name: "ZFC Signature Elite Deal",
+                price: 25000,
+                category: "main",
+                description: "The most expensive deal. Stuffed Lamb, Seafood Mix, Royal Desserts, and Private Cabin for 12.",
+                image: "https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 35,
+                name: "Classic Margherita",
+                price: 1200,
+                category: "pizza",
+                description: "Traditional Italian style with fresh tomato sauce, basil, and pure mozzarella.",
+                image: "https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 36,
+                name: "ZFC Signature Tikka",
+                price: 1650,
+                category: "pizza",
+                description: "Desi style spicy chicken tikka chunks with onions and green peppers.",
+                image: "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 37,
+                name: "Spicy Chicken Fajita",
+                price: 1750,
+                category: "pizza",
+                description: "Marinated fajita chicken, jalapeños, olives, and extra stringy cheese.",
+                image: "https://images.pexels.com/photos/10790638/pexels-photo-10790638.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 38,
+                name: "Premium Pepperoni Feast",
+                price: 1850,
+                category: "pizza",
+                description: "Loaded with premium beef pepperoni slices and double mozzarella.",
+                image: "https://images.pexels.com/photos/1552635/pexels-photo-1552635.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 39,
+                name: "ZFC Stuffed Crust Gold",
+                price: 2200,
+                category: "pizza",
+                description: "Cheese-filled crust with any topping of your choice. A 7-star favorite.",
+                image: "https://images.pexels.com/photos/2619967/pexels-photo-2619967.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 40,
+                name: "Veggie Delight Supreme",
+                price: 1400,
+                category: "pizza",
+                description: "Corn, mushrooms, olives, peppers, and onions. Healthy and delicious.",
+                image: "https://images.pexels.com/photos/3652899/pexels-photo-3652899.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 41,
+                name: "Smokey BBQ Chicken Pizza",
+                price: 1800,
+                category: "pizza",
+                description: "BBQ sauce base with grilled chicken, red onions, and sweet corn.",
+                image: "https://images.pexels.com/photos/4394612/pexels-photo-4394612.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 42,
+                name: "Royal Seafood Pizza",
+                price: 2800,
+                category: "pizza",
+                description: "Premium topping of prawns and tuna with a hint of garlic and herbs.",
+                image: "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+             {
+                 id: 43,
+              name: "Club Sandwich Max",
+               price: 750,
+                category: "pizza",
+                description:"zfc king",
+                 image: "https://images.pexels.com/photos/1600727/pexels-photo-1600727.jpeg?auto=compress&cs=tinysrgb&w=600"
+                 },
+                {
+                 id: 44,
+                name: "Assorted Turkish Baklava Box",
+                price: 2500,
+                category: "sweets",
+                description: "Premium 500g box of authentic Turkish Baklava with pistachios and honey.",
+                image: "https://images.pexels.com/photos/10313462/pexels-photo-10313462.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 45,
+                name: "Belgian Chocolate Fudge Cake",
+                price: 3800,
+                category: "sweets",
+                description: "Full 2lbs rich chocolate cake made with premium Belgian cocoa and dark chocolate.",
+                image: "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 46,
+                name: "New York Cheesecake (Slice)",
+                price: 850,
+                category: "sweets",
+                description: "Creamy, smooth cheesecake on a graham cracker crust with strawberry topping.",
+                image: "https://images.pexels.com/photos/1126359/pexels-photo-1126359.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 47,
+                name: "ZFC Royal Shahi Tukray",
+                price: 1200,
+                category: "sweets",
+                description: "Traditional bread pudding slow-cooked in thick saffron milk and dry fruits.",
+                image: "https://images.pexels.com/photos/1359302/pexels-photo-1359302.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 48,
+                name: "Premium Macarons Gift Box",
+                price: 1800,
+                category: "sweets",
+                description: "Box of 12 colorful French macarons with assorted flavors like lavender, rose, and pistachio.",
+                image: "https://images.pexels.com/photos/239578/pexels-photo-239578.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 49,
+                name: "Custom Fondant Celebration Cake",
+                price: 4800,
+                category: "sweets",
+                description: "2kg custom designed cake for birthdays or anniversaries with edible fondant art.",
+                image: "https://images.pexels.com/photos/1702373/pexels-photo-1702373.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 50,
+                name: "Desi Ghee Gajar Ka Halwa",
+                price: 950,
+                category: "sweets",
+                description: "Fresh carrots slow-cooked in pure desi ghee and khoya. A winter special.",
+                image: "https://images.pexels.com/photos/5639413/pexels-photo-5639413.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 51,
+                name: "Premium Assorted Cookies Bucket",
+                price: 1500,
+                category: "sweets",
+                description: "1kg freshly baked bakery cookies including Almond, Chocolate Chip, and Pistachio.",
+                image: "https://images.pexels.com/photos/230325/pexels-photo-230325.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 52,
+                name: "ZFC Gold Leaf Matka Kheer",
+                price: 2200,
+                category: "sweets",
+                description: "Elite kheer served in traditional clay pots decorated with real edible gold leaf.",
+                image: "https://images.pexels.com/photos/4087611/pexels-photo-4087611.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 53,
+                name: "Premium Fettuccine Alfredo",
+                price: 1850,
+                category: "main",
+                description: "Creamy white sauce pasta with grilled chicken chunks, mushrooms, and imported parmesan cheese.",
+                image: "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+           
+            {
+                id: 55,
+                name: "Royal Mutton Raan Roast",
+                price: 7500,
+                category: "main",
+                description: "Whole leg of lamb slow-roasted for 8 hours, marinated in secret ZFC royal spices. Serves 4-5.",
+                image: "https://images.pexels.com/photos/541216/pexels-photo-541216.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 56,
+                name: "Spicy Seafood Penne",
+                price: 2400,
+                category: "main",
+                description: "Penne pasta tossed in spicy red arrabbiata sauce with sautéed prawns and calamari.",
+                image: "https://images.pexels.com/photos/14737/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 57,
+                name: "Saffron Pistachio Kheer",
+                price: 1100,
+                category: "sweets",
+                description: "Traditional slow-cooked rice pudding infused with pure saffron and topped with roasted pistachios.",
+                image: "https://images.pexels.com/photos/1359302/pexels-photo-1359302.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+           
+            {
+                id: 59,
+                name: "Premium Beef Nalli Nihari",
+                price: 3200,
+                category: "main",
+                description: "Buffalo meat slow-cooked to perfection with bone marrow (Nalli) and authentic Nihari spices. Served with ginger and lemon.",
+                image: "https://images.pexels.com/photos/604969/pexels-photo-604969.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 60,
+                name: "ZFC Special Beef Karahi",
+                price: 2800,
+                category: "main",
+                description: "Fresh buffalo meat stir-fried in a wok with tomatoes, green chilies, and black pepper. Authentic 7-star taste.",
+                image: "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 61,
+                name: "Baked Chicken Lasagna",
+                price: 2100,
+                category: "main",
+                description: "Layers of pasta sheet filled with minced chicken, red sauce, and topped with a heavy layer of melted mozzarella and cheddar.",
+                image: "https://images.pexels.com/photos/5949900/pexels-photo-5949900.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 62,
+                name: "Exotic Fruit Trifle Custard",
+                price: 1250,
+                category: "sweets",
+                description: "Multi-layered dessert with vanilla custard, fresh seasonal fruits, jelly, and soft sponge cake. A family favorite.",
+                image: "https://images.pexels.com/photos/2693447/pexels-photo-2693447.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 63,
+                name: "Premium Fruit Cream Salad",
+                price: 1450,
+                category: "sweets",
+                description: "A rich mix of fresh fruits, cocktail fruits, and dry fruits folded into chilled, whipped fresh cream.",
+                image: "https://images.pexels.com/photos/11305342/pexels-photo-11305342.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 64,
+                name: "Creamy Chicken Macaroni",
+                price: 1650,
+                category: "main",
+                description: "Italian style macaroni tossed in a rich, creamy bechamel sauce with tender chicken chunks and bell peppers.",
+                image: "https://images.pexels.com/photos/1438672/pexels-photo-1438672.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+             {
+                id: 14,
+                name: "Bana Shake",
+                price: 400,
+                category: "drinks",
+                description: "Thick and creamy mango shake",
+                image: "https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
+            {
+                id: 15,
+                name: "Beef Burger Deluxe",
+                price: 850,
+                category: "fast-food",
+                description: "Juicy beef patty with fresh toppings",
+                image: "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=600"
+            },
         ];
 
         let cart = [];
@@ -2253,5 +2891,5 @@
         }
     </script>
 </body>
-
 </html>
+
