@@ -31,6 +31,7 @@
             --whatsapp: #25D366;
             --success: #28a745;
             --danger: #dc3545;
+            --info: #17a2b8;
         }
 
         * {
@@ -80,11 +81,11 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Sticky Order Button */
+        /* Sticky Order Button - Moved to right */
         .sticky-order-btn {
             position: fixed;
-            bottom: 180px;
-            left: 20px;
+            bottom: 190px; /* Adjusted position */
+            right: 30px; /* Moved to right */
             z-index: 999;
             background: var(--gradient-green);
             color: var(--white);
@@ -98,6 +99,7 @@
             cursor: pointer;
             border: none;
             font-size: 1.1rem;
+            transition: all 0.3s ease; /* Added transition for hover */
         }
 
         .sticky-order-btn:hover {
@@ -110,7 +112,7 @@
             50% { transform: scale(1.05); }
         }
 
-        /* WhatsApp Float Button */
+        /* WhatsApp Float Button - Adjusted position */
         .whatsapp-float {
             position: fixed;
             bottom: 260px;
@@ -138,10 +140,10 @@
             color: var(--white);
         }
 
-        /* Call Float Button */
+        /* Call Float Button - Adjusted position */
         .call-float {
             position: fixed;
-            bottom: 180px;
+            bottom: 120px; /* Adjusted position */
             right: 30px;
             width: 70px;
             height: 70px;
@@ -166,10 +168,10 @@
             color: var(--white);
         }
 
-        /* SMS Float Button */
+        /* SMS Float Button - Adjusted position */
         .sms-float {
             position: fixed;
-            bottom: 100px;
+            bottom: 50px; /* Adjusted position */
             right: 30px;
             width: 70px;
             height: 70px;
@@ -194,10 +196,10 @@
             color: var(--white);
         }
 
-        /* Chat Button */
+        /* Chat Button (Firebase for Admin) - Adjusted position */
         #chat-button {
             position: fixed;
-            bottom: 30px;
+            bottom: 5px; /* Adjusted position */
             right: 30px;
             width: 70px;
             height: 70px;
@@ -293,7 +295,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), 
-                        url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070');
+                        url('https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=2070');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -681,61 +683,6 @@
             color: var(--primary);
         }
 
-        /* Subscribe Button Styles */
-        .subscribe-section {
-            background-color: var(--light); /* Ensure matching background */
-            text-align: center;
-        }
-
-        .subscribe-btn {
-            background: var(--gradient-green);
-            color: var(--white);
-            padding: 18px 40px;
-            border: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            box-shadow: 0 10px 30px rgba(46, 125, 50, 0.4);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .subscribe-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.6);
-        }
-
-        .subscribe-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: all 0.7s ease-in-out;
-        }
-
-        .subscribe-btn:hover::before {
-            left: 100%;
-        }
-
-        .subscribe-btn i {
-            margin-right: 10px;
-        }
-
-        /* Subscription status message */
-        #subscription-status {
-            font-size: 0.95rem;
-            color: var(--text-dark);
-        }
         /* Developer Section */
         .royal-font {
             font-family: 'Cormorant Garamond', serif;
@@ -819,14 +766,22 @@
         /* Cart & Checkout Modals */
         #cartModal .modal-content,
         #checkoutModal .modal-content,
-        #adminLoginModal .modal-content {
+        #adminLoginModal .modal-content,
+        #addEditMenuItemModal .modal-content,
+        #adminChatModal .modal-content,
+        #adminSettingsModal .modal-content,
+        #userChatModal .modal-content {
             border-radius: 15px;
             overflow: hidden;
         }
 
         #cartModal .modal-header,
         #checkoutModal .modal-header,
-        #adminLoginModal .modal-header {
+        #adminLoginModal .modal-header,
+        #addEditMenuItemModal .modal-header,
+        #adminChatModal .modal-header,
+        #adminSettingsModal .modal-header,
+        #userChatModal .modal-header {
             background: var(--dark);
             color: var(--white);
             border-bottom: none;
@@ -834,15 +789,23 @@
 
         #cartModal .modal-title,
         #checkoutModal .modal-title,
-        #adminLoginModal .modal-title {
+        #adminLoginModal .modal-title,
+        #addEditMenuItemModal .modal-title,
+        #adminChatModal .modal-title,
+        #adminSettingsModal .modal-title,
+        #userChatModal .modal-title {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 700;
         }
 
         #cartModal .btn-close-white,
         #checkoutModal .btn-close-white,
-        #adminLoginModal .btn-close-white {
-            filter: invert(1) grayscale(100%) brightness(200%);
+        #adminLoginModal .btn-close-white,
+        #addEditMenuItemModal .btn-close-white,
+        #adminChatModal .btn-close-white,
+        #adminSettingsModal .btn-close-white,
+        #userChatModal .btn-close-white {
+            filter: invert(1) grayscale(100%) brightness(200%); /* Makes btn-close white */
         }
 
         .cart-summary {
@@ -918,7 +881,7 @@
 
         /* Admin Dashboard */
         .admin-panel {
-            display: none;
+            display: none; /* Hidden by default */
             position: fixed;
             top: 0;
             left: 0;
@@ -929,13 +892,48 @@
             overflow-y: auto;
         }
 
+        .admin-sidebar {
+            width: 250px;
+            background: var(--dark);
+            color: var(--white);
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .admin-sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .admin-sidebar .nav-link:hover,
+        .admin-sidebar .nav-link.active {
+            background: var(--primary);
+            color: var(--white) !important;
+        }
+
+        .admin-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
         .admin-header {
             background: var(--gradient-dark);
             color: var(--white);
             padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 999;
         }
 
         .admin-stats {
@@ -958,7 +956,18 @@
             margin-top: 10px;
         }
 
-        .order-card {
+        .data-table {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow);
+            padding: 20px;
+        }
+
+        .data-table .table {
+            margin-bottom: 0;
+        }
+
+        .order-card, .message-card, .booking-card {
             background: var(--white);
             padding: 25px;
             border-radius: 15px;
@@ -967,12 +976,17 @@
             border-left: 5px solid var(--primary);
         }
 
-        .order-card h5 {
+        .order-card.unread, .message-card.unread {
+            border-left: 5px solid var(--info);
+            background-color: #eaf7f9; /* Light blue background for unread */
+        }
+
+        .order-card h5, .message-card h5, .booking-card h5 {
             color: var(--dark);
             font-weight: 700;
         }
 
-        .order-card p {
+        .order-card p, .message-card p, .booking-card p {
             margin-bottom: 8px;
             font-size: 0.95rem;
         }
@@ -983,6 +997,24 @@
             border-radius: 10px;
             margin-top: 15px;
             border: 1px solid #eee;
+        }
+
+        /* Menu Item Admin List */
+        .admin-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .admin-menu-item:last-child {
+            border-bottom: none;
+        }
+        .admin-menu-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 15px;
         }
 
         /* Notification */
@@ -1012,6 +1044,70 @@
                 opacity: 1;
             }
         }
+
+        /* Chat Modal Styles */
+        #user-chat-messages, #adminChatModalBody {
+            display: flex;
+            flex-direction: column;
+            height: 350px; /* Fixed height for chat window */
+            overflow-y: auto;
+            padding: 15px;
+            background-color: #f8f9fa;
+        }
+        .chat-message {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+        .chat-message.sent {
+            align-self: flex-end;
+            background-color: var(--primary);
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+        .chat-message.received {
+            align-self: flex-start;
+            background-color: #e9ecef;
+            color: var(--dark);
+            border-bottom-left-radius: 2px;
+        }
+        .chat-timestamp {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 5px;
+            text-align: right;
+        }
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #dee2e6;
+            background-color: white;
+        }
+        #chatInput, #userChatMessageInput, #adminChatInput {
+            flex-grow: 1;
+            border-radius: 20px;
+            padding: 10px 15px;
+            border: 1px solid #ced4da;
+        }
+        #chatSendBtn, #userChatSendBtn, #adminChatSendBtn {
+            margin-left: 10px;
+            border-radius: 20px;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+        .chat-header-user {
+            font-weight: bold;
+            color: var(--dark);
+        }
+        .message-card .read-status {
+            font-size: 0.8em;
+            color: #6c757d;
+        }
+
 
         /* Responsive */
         @media (max-width: 991px) {
@@ -1058,26 +1154,52 @@
             .booking-form {
                 padding: 30px;
             }
+            
+            /* Mobile floating buttons arrangement - All on right side, adjusted spacing */
             .sticky-order-btn {
-                bottom: 100px;
-                left: 50%;
-                transform: translateX(-50%);
+                bottom: 180px; /* Adjusted position */
+                right: 20px;
+                left: unset; /* Remove left property */
+                transform: none; /* Remove transform property */
                 padding: 15px 25px;
                 font-size: 1rem;
             }
-            .whatsapp-float, .call-float, .sms-float, #chat-button {
+            .whatsapp-float { 
+                bottom: 240px; /* Adjusted position */
+                right: 20px; 
                 width: 55px;
                 height: 55px;
-                right: 20px;
+            }
+            .call-float { 
+                bottom: 120px; /* Adjusted position */
+                right: 20px; 
+                width: 55px;
+                height: 55px;
+            }
+            .sms-float { 
+                bottom: 60px; /* Adjusted position */
+                right: 20px; 
+                width: 55px;
+                height: 55px;
+            }
+            #chat-button { 
+                bottom: 0px; /* Adjusted position */
+                right: 20px; 
+                width: 55px;
+                height: 55px;
             }
             .whatsapp-float i, .call-float i, .sms-float i, #chat-button i {
                 font-size: 1.8rem;
             }
-            .whatsapp-float { bottom: 200px; }
-            .call-float { bottom: 135px; }
-            .sms-float { bottom: 70px; }
-            #chat-button { bottom: 5px; }
 
+            .admin-sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+            .admin-content {
+                margin-left: 0;
+            }
             .admin-stats {
                 grid-template-columns: 1fr;
             }
@@ -1101,21 +1223,17 @@
                 padding: 10px 20px;
                 font-size: 0.9rem;
             }
+            /* Smallest mobile screens adjustment */
             .sticky-order-btn {
-                bottom: 100px; /* Adjust if other floats are too close */
-                left: 50%;
-                transform: translateX(-50%);
+                bottom: 180px;
+                right: 15px; /* Slightly more inward */
                 font-size: 0.9rem;
                 padding: 12px 25px;
             }
-            .whatsapp-float { bottom: 200px; }
-            .call-float { bottom: 140px; }
-            .sms-float { bottom: 80px; }
-            #chat-button { bottom: 20px; right: 20px; }
-            .whatsapp-float, .call-float, .sms-float, #chat-button {
-                width: 50px;
-                height: 50px;
-            }
+            .whatsapp-float { bottom: 240px; right: 15px; width: 50px; height: 50px; }
+            .call-float { bottom: 120px; right: 15px; width: 50px; height: 50px; }
+            .sms-float { bottom: 60px; right: 15px; width: 50px; height: 50px; }
+            #chat-button { bottom: 0px; right: 15px; width: 50px; height: 50px; }
             .whatsapp-float i, .call-float i, .sms-float i, #chat-button i {
                 font-size: 1.6rem;
             }
@@ -1134,7 +1252,7 @@
     </button>
 
     <!-- WhatsApp Float Button -->
-    <div class="whatsapp-float" onclick="openWhatsApp()">
+    <div class="whatsapp-float" onclick="openDirectWhatsApp()">
         <i class="fab fa-whatsapp"></i>
     </div>
 
@@ -1148,8 +1266,8 @@
         <i class="fas fa-sms"></i>
     </div>
 
-    <!-- Chat Button -->
-    <div id="chat-button" onclick="openWhatsApp()">
+    <!-- Chat Button (Firebase for Admin) -->
+    <div id="chat-button" data-bs-toggle="modal" data-bs-target="#userChatModal">
         <i class="fas fa-comments"></i>
     </div>
 
@@ -1231,6 +1349,7 @@
                 <button class="category-btn" data-category="pizza">Pizza</button>
                 <button class="category-btn" data-category="dessert">Desserts</button>
                 <button class="category-btn" data-category="drinks">Drinks</button>
+                <button class="category-btn" data-category="sweets">Sweets</button> <!-- Added Sweets Category -->
             </div>
 
             <div class="row g-4" id="menu-container">
@@ -1254,7 +1373,7 @@
                             </div>
                             <div>
                                 <h6 class="mb-1 text-white">Call for Reservations</h6>
-                                <h5 style="color: var(--primary); font-weight: 700;">+92 318 8791637</h5>
+                                <h5 style="color: var(--primary); font-weight: 700;" id="booking-call-number">+92 318 8791637</h5>
                             </div>
                         </div>
                         <div class="d-flex align-items-center">
@@ -1490,21 +1609,6 @@
         </div>
     </section>
 
-    <!-- Subscribe Section -->
-    <section class="subscribe-section section-padding" style="background-color: var(--light);" id="subscribe">
-        <div class="container text-center" data-aos="fade-up">
-            <div class="section-title">
-                <div class="subtitle">Stay Updated</div>
-                <h2>Get Notified for New Menu Items!</h2>
-                <p class="lead text-muted">Be the first to know about our latest delicious additions and special offers.</p>
-            </div>
-            <button class="subscribe-btn" id="subscribe-button">
-                <i class="fas fa-bell me-2"></i> Subscribe for Updates
-            </button>
-            <p id="subscription-status" class="mt-3 text-muted"></p>
-        </div>
-    </section>
-
     <!-- Contact & Location Section -->
     <section class="section-padding bg-white" id="contact">
         <div class="container">
@@ -1531,7 +1635,7 @@
                         </div>
                         <div class="text-white">
                             <h6 class="mb-0">Phone</h6>
-                            <p class="mb-0 small opacity-75">+92 318 8791637</p>
+                            <p class="mb-0 small opacity-75" id="contact-phone">+92 318 8791637</p>
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
@@ -1546,19 +1650,27 @@
                 </div>
                 <!-- Map Column -->
                 <div class="col-lg-8" style="min-height: 450px;">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3442.179!2d71.4951!3d30.0142!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDAwJzUxLjEiTiA3McKwMjknNDIuNCJF!5e0!3m2!1sen!2s!4v1234567890" 
-                        width="100%" 
-                        height="100%" 
-                        style="border:0;" 
-                        allowfullscreen="" 
-                        loading="lazy">
-                    </iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3451.729211618593!2d71.49176077534725!3d30.10194067489465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b3976ac703765%3A0x6ea9198153dff46!2zWmF5dG9vbiBHYXJkZW4gUmVzdGF1cmFudCBNdWx0YW4g2LLbjNiq2YjZhiDar9in2LHaiNmGINix24zYs9m52YjYsdmG2bkg2YXZhNiq2KfZhg!5e0!3m2!1sen!2s!4v1768095610612!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
     </section>
     
+    <!-- Subscribe Section -->
+    <section class="subscribe-section section-padding" style="background-color: var(--light);" id="subscribe">
+        <div class="container text-center" data-aos="fade-up">
+            <div class="section-title">
+                <div class="subtitle">Stay Updated</div>
+                <h2>Get Notified for New Menu Items!</h2>
+                <p class="lead text-muted">Be the first to know about our latest delicious additions and special offers.</p>
+            </div>
+            <button class="btn btn-primary-custom" id="subscribe-button">
+                <i class="fas fa-bell me-2"></i> Subscribe for Updates
+            </button>
+            <p id="subscription-status" class="mt-3 text-muted"></p>
+        </div>
+    </section>
+
     <!-- Developer Section: Muhammad Umair -->
     <section class="section-padding" style="background: #0f0f0f; color: #ffffff; border-top: 2px solid var(--primary);">
         <div class="container">
@@ -1616,7 +1728,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 footer-section mb-4 mb-lg-0">
-                    <h5>ZFC Restaurant</h5>
+                    <h5>zytoon Restaurant</h5>
                     <p class="text-light">Experience the finest culinary journey with our premium dining experience. We serve excellence on every plate.</p>
                     <div class="social-links">
                         <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
@@ -1639,7 +1751,7 @@
                     <h5>Contact Info</h5>
                     <ul class="footer-links">
                         <li><i class="fas fa-map-marker-alt me-2"></i> BUW Road, Multan </li>
-                        <li><i class="fas fa-phone me-2"></i> +92 318 8791637</li>
+                        <li><i class="fas fa-phone me-2"></i> <span id="footer-phone-number">+92 318 8791637</span></li>
                         <li><i class="fas fa-envelope me-2"></i> info@zytoon.com</li>
                     </ul>
                 </div>
@@ -1747,12 +1859,21 @@
                         <div id="payment-details" style="display: none;" class="mb-3">
                             <div class="alert alert-info">
                                 <h6 class="fw-bold">Payment Details:</h6>
-                                <p class="mb-2"><strong>JazzCash:</strong> 0304-9472735</p>
-                                <p class="mb-2"><strong>EasyPaisa:</strong> 0318-8791637</p>
+                                <p class="mb-2">
+                                    <strong>JazzCash:</strong> <span id="checkout-jazzcash-num">0304-9472735</span> 
+                                    <button type="button" class="btn btn-sm btn-outline-primary ms-2" onclick="copyToClipboard('checkout-jazzcash-num')">Copy</button>
+                                </p>
+                                <p class="mb-2">
+                                    <strong>EasyPaisa:</strong> <span id="checkout-easypaisa-num">0318-8791637</span> 
+                                    <button type="button" class="btn btn-sm btn-outline-primary ms-2" onclick="copyToClipboard('checkout-easypaisa-num')">Copy</button>
+                                </p>
                                 <p class="mb-2"><strong>Bank Account:</strong></p>
-                                <p class="mb-1">Account No: 1234567890</p>
-                                <p class="mb-1">Account Holder: Zaytoon Garden</p>
-                                <p class="mb-0">Bank: HBL</p>
+                                <p class="mb-1">
+                                    Account No: <span id="checkout-bank-acc-no">1234567890</span> 
+                                    <button type="button" class="btn btn-sm btn-outline-primary ms-2" onclick="copyToClipboard('checkout-bank-acc-no')">Copy</button>
+                                </p>
+                                <p class="mb-1">Account Holder: <span id="checkout-bank-acc-holder">Zaytoon Garden</span></p>
+                                <p class="mb-0">Bank: <span id="checkout-bank-name">HBL</span></p>
                             </div>
                             <label class="form-label fw-bold">Upload Payment Screenshot *</label>
                             <input type="file" class="form-control" id="payment-screenshot" accept="image/*">
@@ -1789,10 +1910,71 @@
         </div>
     </div>
 
+    <!-- User Chat Modal -->
+    <div class="modal fade" id="userChatModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title"><i class="fas fa-comments me-2"></i>Zaytoon Garden Chat</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="user-chat-messages" style="height: 350px; overflow-y: auto; background-color: #f8f9fa; padding: 15px; border-radius: 8px;">
+                        <!-- User's chat messages will be loaded here -->
+                    </div>
+                    <div class="mt-3 d-flex">
+                        <input type="text" class="form-control" id="userChatMessageInput" placeholder="Type your message...">
+                        <button class="btn btn-primary-custom ms-2" id="userChatSendBtn">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Admin Dashboard -->
     <div class="admin-panel" id="admin-panel">
-        <div class="admin-header">
-            <div class="container">
+        <div class="admin-sidebar">
+            <h4 class="text-white text-center mb-4 pt-3 royal-font">Admin Panel</h4>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#dashboard-overview" onclick="showAdminSection('dashboard-overview')">
+                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#admin-orders-list" onclick="showAdminSection('admin-orders-list')">
+                        <i class="fas fa-receipt me-2"></i> Orders
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#admin-menu-management" onclick="showAdminSection('admin-menu-management')">
+                        <i class="fas fa-utensils me-2"></i> Menu Management
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#admin-bookings-list" onclick="showAdminSection('admin-bookings-list')">
+                        <i class="fas fa-calendar-alt me-2"></i> Bookings
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#admin-messages-list" onclick="showAdminSection('admin-messages-list')">
+                        <i class="fas fa-comments me-2"></i> Messages (<span id="unread-messages-badge">0</span> Unread)
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#admin-settings" onclick="showAdminSection('admin-settings')">
+                        <i class="fas fa-cogs me-2"></i> Settings
+                    </a>
+                </li>
+                <li class="nav-item mt-3">
+                    <button class="btn btn-outline-light w-100" onclick="adminLogout()">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="admin-content">
+            <div class="admin-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h2>Admin Dashboard - Zaytoon Garden</h2>
                     <button class="btn btn-outline-light" onclick="closeAdmin()">
@@ -1800,165 +1982,265 @@
                     </button>
                 </div>
             </div>
-        </div>
-        <div class="container py-5">
-            <div class="admin-stats">
-                <div class="stat-card">
-                    <h6 class="text-muted">Total Orders</h6>
-                    <h2 class="text-success" id="total-orders">0</h2>
+
+            <!-- Dashboard Overview Section -->
+            <div id="dashboard-overview" class="admin-section active">
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <h6 class="text-muted">Total Orders</h6>
+                        <h2 class="text-success" id="total-orders">0</h2>
+                    </div>
+                    <div class="stat-card">
+                        <h6 class="text-muted">Pending Orders</h6>
+                        <h2 class="text-warning" id="pending-orders">0</h2>
+                    </div>
+                    <div class="stat-card">
+                        <h6 class="text-muted">Completed Orders</h6>
+                        <h2 class="text-primary" id="completed-orders">0</h2>
+                    </div>
+                    <div class="stat-card">
+                        <h6 class="text-muted">Total Revenue</h6>
+                        <h2 class="text-success" id="total-revenue">Rs. 0</h2>
+                    </div>
+                    <div class="stat-card">
+                        <h6 class="text-muted">Total Bookings</h6>
+                        <h2 class="text-info" id="total-bookings">0</h2>
+                    </div>
+                    <div class="stat-card">
+                        <h6 class="text-muted">New Messages</h6>
+                        <h2 class="text-danger" id="new-messages">0</h2>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <h6 class="text-muted">Pending Orders</h6>
-                    <h2 class="text-warning" id="pending-orders">0</h2>
+                <h3 class="mb-4">Recent Orders</h3>
+                <div id="admin-orders-recent"></div>
+            </div>
+
+            <!-- Admin Orders List Section -->
+            <div id="admin-orders-list" class="admin-section">
+                <h3 class="mb-4">All Orders</h3>
+                <div id="admin-orders-full"></div>
+            </div>
+
+            <!-- Admin Menu Management Section -->
+            <div id="admin-menu-management" class="admin-section">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3>Menu Items</h3>
+                    <button class="btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#addEditMenuItemModal" onclick="prepareMenuItemForm()">
+                        <i class="fas fa-plus me-2"></i>Add New Item
+                    </button>
                 </div>
-                <div class="stat-card">
-                    <h6 class="text-muted">Completed Orders</h6>
-                    <h2 class="text-primary" id="completed-orders">0</h2>
-                </div>
-                <div class="stat-card">
-                    <h6 class="text-muted">Total Revenue</h6>
-                    <h2 class="text-success" id="total-revenue">Rs. 0</h2>
+                <div class="data-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-menu-items-table">
+                            <!-- Menu items will be loaded here -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <h3 class="mb-4">Recent Orders</h3>
-            <div id="admin-orders"></div>
+
+            <!-- Admin Bookings List Section -->
+            <div id="admin-bookings-list" class="admin-section">
+                <h3 class="mb-4">Table Bookings</h3>
+                <div id="admin-bookings-container"></div>
+            </div>
+
+            <!-- Admin Messages List Section -->
+            <div id="admin-messages-list" class="admin-section">
+                <h3 class="mb-4">Customer Messages</h3>
+                <div id="admin-messages-container"></div>
+            </div>
+
+            <!-- Admin Settings Section -->
+            <div id="admin-settings" class="admin-section">
+                <h3 class="mb-4">Website Settings</h3>
+
+                <div class="card mb-4">
+                    <div class="card-header bg-dark text-white">Contact Numbers</div>
+                    <div class="card-body">
+                        <form id="contact-numbers-form">
+                            <div class="mb-3">
+                                <label for="setting-whatsapp-num" class="form-label">WhatsApp Number</label>
+                                <input type="text" class="form-control" id="setting-whatsapp-num" placeholder="+92XXXXXXXXXX">
+                            </div>
+                            <div class="mb-3">
+                                <label for="setting-call-num" class="form-label">Call Number</label>
+                                <input type="text" class="form-control" id="setting-call-num" placeholder="+92XXXXXXXXXX">
+                            </div>
+                            <div class="mb-3">
+                                <label for="setting-sms-num" class="form-label">SMS Number</label>
+                                <input type="text" class="form-control" id="setting-sms-num" placeholder="+92XXXXXXXXXX">
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom">Save Contact Numbers</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header bg-dark text-white">Payment Account Details</div>
+                    <div class="card-body">
+                        <form id="payment-details-form">
+                            <div class="mb-3">
+                                <label for="setting-jazzcash-num" class="form-label">JazzCash Number</label>
+                                <input type="text" class="form-control" id="setting-jazzcash-num" placeholder="03XXXXXXXXX">
+                            </div>
+                            <div class="mb-3">
+                                <label for="setting-easypaisa-num" class="form-label">EasyPaisa Number</label>
+                                <input type="text" class="form-control" id="setting-easypaisa-num" placeholder="03XXXXXXXXX">
+                            </div>
+                            <div class="mb-3">
+                                <label for="setting-bank-acc-no" class="form-label">Bank Account Number</label>
+                                <input type="text" class="form-control" id="setting-bank-acc-no" placeholder="XXXXXXXXXXXXXX">
+                            </div>
+                            <div class="mb-3">
+                                <label for="setting-bank-acc-holder" class="form-label">Bank Account Holder Name</label>
+                                <input type="text" class="form-control" id="setting-bank-acc-holder" placeholder="Account Holder Name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="setting-bank-name" class="form-label">Bank Name</label>
+                                <input type="text" class="form-control" id="setting-bank-name" placeholder="Bank Name (e.g., HBL)">
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom">Save Payment Details</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header bg-dark text-white">Auto-Reply Message (for new chat messages)</div>
+                    <div class="card-body">
+                        <form id="auto-reply-form">
+                            <div class="mb-3">
+                                <textarea class="form-control" id="setting-auto-reply" rows="3" placeholder="Thank you for your message! We will get back to you shortly."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom">Save Auto-Reply</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
+
+    <!-- Add/Edit Menu Item Modal -->
+    <div class="modal fade" id="addEditMenuItemModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="addEditMenuItemModalLabel">Add New Menu Item</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="menu-item-form">
+                        <input type="hidden" id="menu-item-id">
+                        <div class="mb-3">
+                            <label for="menu-item-name" class="form-label">Item Name</label>
+                            <input type="text" class="form-control" id="menu-item-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="menu-item-description" class="form-label">Description</label>
+                            <textarea class="form-control" id="menu-item-description" rows="2" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="menu-item-price" class="form-label">Price (Rs.)</label>
+                            <input type="number" class="form-control" id="menu-item-price" required min="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="menu-item-category" class="form-label">Category</label>
+                            <select class="form-select" id="menu-item-category" required>
+                                <option value="">Select Category</option>
+                                <option value="fast-food">Fast Food</option>
+                                <option value="main">Main Course</option>
+                                <option value="bbq">BBQ</option>
+                                <option value="pizza">Pizza</option>
+                                <option value="dessert">Desserts</option>
+                                <option value="drinks">Drinks</option>
+                                <option value="sweets">Sweets</option> <!-- Added Sweets Category -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="menu-item-image-url" class="form-label">Image URL (Optional, paste link)</label>
+                            <input type="url" class="form-control" id="menu-item-image-url" placeholder="https://example.com/image.jpg">
+                            <small class="text-muted">Or upload an image:</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="menu-item-image-upload" class="form-label">Upload Image (Optional)</label>
+                            <input type="file" class="form-control" id="menu-item-image-upload" accept="image/*">
+                            <small class="text-muted" id="current-image-preview"></small>
+                        </div>
+                        <button type="submit" class="btn btn-primary-custom w-100">Save Item</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Chat Modal -->
+    <div class="modal fade" id="adminChatModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title"><i class="fas fa-comments me-2"></i>Chat with <span id="chat-user-name"></span></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div id="adminChatModalBody">
+                        <!-- Admin Chat messages will be loaded here -->
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" class="form-control" id="adminChatInput" placeholder="Type your message...">
+                        <button class="btn btn-primary-custom" id="adminChatSendBtn">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, updateDoc, doc, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
-        // NEW: Firebase Messaging SDK ko import karo
-        import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, updateDoc, doc, deleteDoc, getDoc, setDoc, serverTimestamp, arrayUnion, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-        // Firebase Configuration (Tumhari existing config)
+        // IMPORTANT: Replace these with your actual Firebase project configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyAgf_93FAEiR0HSweqrBSwvF1qufSDxryk",
-            authDomain: "zfc-restaurant.firebaseapp.com",
-            projectId: "zfc-restaurant",
-            storageBucket: "zfc-restaurant.firebasestorage.app",
-            messagingSenderId: "756247637010",
-            appId: "1:756247637010:web:82bc7825df07bcd3e4bccb"
+            apiKey: "AIzaSyA6jYns24BirjdQEE7FBAKMp_JykjYCYhQ", // Replace with your Firebase API Key
+            authDomain: "zaytoon-cf818.firebaseapp.com",       // Replace with your Firebase Auth Domain
+            projectId: "zaytoon-cf818",                        // Replace with your Firebase Project ID
+            storageBucket: "zaytoon-cf818.firebasestorage.app", // Replace with your Firebase Storage Bucket
+            messagingSenderId: "349904367392",                 // Replace with your Firebase Messaging Sender ID
+            appId: "1:349904367392:web:6b5f66eb020f09d89e7145"   // Replace with your Firebase App ID
         };
 
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const storage = getStorage(app);
+        const storage = getStorage(app); 
+        let currentUserChatId = null; // To store the chat ID for the currently open admin chat modal
 
-        // 🚨 IMPORTANT: Apni ACTUAL VAPID key yahan paste karo!
-        // Ye key Firebase Console > Project settings > Cloud Messaging > Web configuration > Web Push certificates se milegi.
-        const messaging = getMessaging(app);
-        const VAPID_KEY = "YOUR_FCM_VAPID_KEY_HERE"; 
+        let menuItemsData = []; // To store live menu items from Firebase
+        let cart = [];
+        let deliveryOption = 'delivery'; // Default delivery option
+        let adminLoggedIn = false;
+        let frontendContactNumbers = {};
+        let frontendPaymentDetails = {};
+        let autoReplyMessage = "";
 
-        // Function: User ko notifications ke liye subscribe karna
-        async function subscribeUser() {
-            const statusElement = document.getElementById('subscription-status');
-            statusElement.textContent = "Notifications ki permission maangi ja rahi hai...";
-
-            try {
-                // User se notification ki permission maango
-                const permission = await Notification.requestPermission();
-                if (permission === 'granted') {
-                    statusElement.textContent = "Permission mil gayi. Subscription token generate ho raha hai...";
-                    // FCM registration token hasil karo
-                    const token = await getToken(messaging, { vapidKey: VAPID_KEY });
-
-                    if (token) {
-                        console.log('FCM registration token:', token);
-                        // Token ko Firestore database mein save karo
-                        await saveTokenToFirestore(token);
-                        statusElement.textContent = "Aap subscribe ho chuke hain! Naye menu items ki updates milengi.";
-                        document.getElementById('subscribe-button').disabled = true; // Subscribe hone ke baad button disable kar do
-                        document.getElementById('subscribe-button').textContent = "Subscribed!";
-                    } else {
-                        statusElement.textContent = "Koi registration token nahi mila. Permission dobara maangen.";
-                        showNotification("Subscription token hasil karne mein nakami.", "error");
-                    }
-                } else if (permission === 'denied') {
-                    statusElement.textContent = "Notification permission deny kar di gayi hai. Aapko updates nahi milengi.";
-                    showNotification("Notification permission deny kar di gayi.", "error");
-                } else { // 'default' ya dismissed
-                    statusElement.textContent = "Notification permission ignore kar di gayi.";
-                    showNotification("Notification permission ignore kar di gayi.", "error");
-                }
-            } catch (error) {
-                console.error('User ko subscribe karne mein error:', error);
-                statusElement.textContent = `Subscribe karne mein error: ${error.message}`;
-                showNotification(`Subscribe karne mein error: ${error.message}`, "error");
-            }
-        }
-
-        // Function: FCM token ko Firestore mein save karna
-        async function saveTokenToFirestore(token) {
-            try {
-                // Pehle check karo agar token pehle se mojood hai to duplicate save na ho
-                const q = query(collection(db, 'subscribers'), where('token', '==', token));
-                const querySnapshot = await getDocs(q);
-
-                if (querySnapshot.empty) {
-                    await addDoc(collection(db, 'subscribers'), {
-                        token: token,
-                        timestamp: new Date().toISOString()
-                    });
-                    console.log('FCM token Firestore mein save ho gaya.');
-                } else {
-                    console.log('FCM token pehle se hi Firestore mein mojood hai.');
-                }
-            } catch (error) {
-                console.error('FCM token Firestore mein save karne mein error:', error);
-            }
-        }
-
-        // Jab user website par ho aur message aaye to handle karo (foreground messages)
-        onMessage(messaging, (payload) => {
-            console.log('Message received. ', payload);
-            // Notification ko customize karo aur dikhao
-            const notificationTitle = payload.notification.title;
-            const notificationOptions = {
-                body: payload.notification.body,
-                icon: payload.notification.icon || '/favicon.ico', // Custom icon ya default icon
-                image: payload.notification.image || undefined, // Custom image agar provide kiya ho
-                badge: '/favicon.ico', // Notification bar ke liye chhota icon
-                data: payload.data // Koi bhi custom data pass karne ke liye
-            };
-
-            // Notification display karo
-            if (Notification.permission === 'granted') {
-                new Notification(notificationTitle, notificationOptions);
-            } else {
-                // Agar permission granted nahi hai to custom toast notification dikhao
-                showNotification(`Nayi Update: ${payload.notification.title} - ${payload.notification.body}`, 'success');
-            }
-        });
-
-        // Window load hone par subscribe button par event listener lagao
-        window.addEventListener('load', () => {
-            // ... (Tumhara existing load logic) ...
-            document.getElementById('subscribe-button').addEventListener('click', subscribeUser);
-            // Check karo agar user pehle se subscribe hai to button ko update karo
-            if (Notification.permission === 'granted') {
-                getToken(messaging, { vapidKey: VAPID_KEY }).then(token => {
-                    if (token) {
-                        document.getElementById('subscription-status').textContent = "Aap pehle se subscribe hain!";
-                        document.getElementById('subscribe-button').disabled = true;
-                        document.getElementById('subscribe-button').textContent = "Subscribed!";
-                    }
-                }).catch(error => {
-                    console.error("Existing subscription check karne mein error:", error);
-                });
-            }
-        });
-
-
-        // Menu Data
-        const menuItems = [
+        // Yahan par aapki di hui menu items ki list shamil ki gayi hai
+        // IMPORTANT: Saari IDs ko unique kar diya gaya hai.
+        const initialMenuItemsToSeed = [
             { id: 1, name: "Zinger Burger", price: 850, category: "fast-food", description: "Crispy chicken fillet", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" },
             { id: 2, name: "Chicken Pizza", price: 1950, category: "pizza", description: "Large chicken pizza", image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500" },
             { id: 3, name: "Mutton Karahi", price: 2900, category: "main", description: "Traditional karahi", image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500" },
@@ -1967,473 +2249,154 @@
             { id: 6, name: "Chicken Tikka", price: 1200, category: "bbq", description: "Marinated chicken", image: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500" },
             { id: 7, name: "Lava Cake", price: 750, category: "dessert", description: "Chocolate cake", image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500" },
             { id: 8, name: "Mint Margarita", price: 350, category: "drinks", description: "Refreshing drink", image: "https://images.unsplash.com/photo-1546173159-315724a31696?w=500" },
-
-            {
-            
-             id: 9,
-                name: "Club Sandwich Max",
-                price: 750,
-                category: "fast-food",
-                description: "Triple decker sandwich with chicken and vegetables",
-                image: "https://images.pexels.com/photos/1600727/pexels-photo-1600727.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 10,
-                name: "Chicken Biryani Full",
-                price: 950,
-                category: "main",
-                description: "Aromatic basmati rice with tender chicken",
-                image: "https://images.pexels.com/photos/7394851/pexels-photo-7394851.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 12,
-                name: "Chicken Tikka BBQ",
-                price: 1600,
-                category: "bbq",
-                description: "Marinated chicken pieces grilled to perfection",
-                image: "https://images.pexels.com/photos/5410400/pexels-photo-5410400.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 13,
-                name: "Special Fish Fry",
-                price: 1800,
-                category: "main",
-                description: "Fresh fish marinated and fried with spices",
-                image: "https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 14,
-                name: "Mango Shake",
-                price: 400,
-                category: "drinks",
-                description: "Thick and creamy mango shake",
-                image: "https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 15,
-                name: "Beef Burger Deluxe",
-                price: 850,
-                category: "fast-food",
-                description: "Juicy beef patty with fresh toppings",
-                image: "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 16,
-                name: "Malai Boti",
-                price: 1500,
-                category: "bbq",
-                description: "Creamy marinated chicken tikka",
-                image: "https://images.pexels.com/photos/6210876/pexels-photo-6210876.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 17,
-                name: "Gulab Jamun",
-                price: 500,
-                category: "dessert",
-                description: "Traditional sweet dumplings in sugar syrup",
-                image: "https://images.pexels.com/photos/4087611/pexels-photo-4087611.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 18,
-                name: "Fresh Lime Soda",
-                price: 300,
-                category: "drinks",
-                description: "Refreshing lime drink with soda",
-                image: "https://images.pexels.com/photos/1233319/pexels-photo-1233319.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 19,
-                name: "ZFC Royal Mutton Karahi",
-                price: 3800,
-                category: "main",
-                description: "Premium mutton cooked in traditional desi ghee with secret ZFC spices.",
-                image: "https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 20,
-                name: "Executive T-Bone Steak",
-                price: 4500,
-                category: "main",
-                description: "Prime cut beef steak served with grilled vegetables and mushroom sauce.",
-                image: "https://images.pexels.com/photos/675951/pexels-photo-675951.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 21,
-                name: "Jumbo Grilled Prawns",
-                price: 5200,
-                category: "bbq",
-                description: "Fresh jumbo prawns marinated in lemon butter and charcoal grilled.",
-                image: "https://images.pexels.com/photos/566344/pexels-photo-566344.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 22,
-                name: "Whole Stuffed Sajji",
-                price: 2800,
-                category: "main",
-                description: "Full chicken stuffed with aromatic rice and slow-roasted over charcoal.",
-                image: "https://images.pexels.com/photos/233305/pexels-photo-233305.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 23,
-                name: "Grand ZFC BBQ Platter",
-                price: 4800,
-                category: "bbq",
-                description: "A royal mix of Kababs, Tikka, Malai Boti, and Chops for the whole family.",
-                image: "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 24,
-                name: "Beef Wellington Exclusive",
-                price: 6500,
-                category: "main",
-                description: "Tender beef fillet wrapped in puff pastry with mushroom duxelles.",
-                image: "https://images.pexels.com/photos/7613568/pexels-photo-7613568.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 25,
-                name: "Mutton Kunna Clay Pot",
-                price: 3400,
-                category: "main",
-                description: "Traditional Chinioti Mutton Kunna slow-cooked in a clay pot for 6 hours.",
-                image: "https://images.pexels.com/photos/106343/pexels-photo-106343.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 26,
-                name: "Grilled Lobster Tail",
-                price: 6800,
-                category: "main",
-                description: "Premium lobster tail served with garlic butter sauce and saffron rice.",
-                image: "https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 27,
-                name: "Turkish Adana Kebab Platter",
-                price: 3500,
-                category: "bbq",
-                description: "Authentic spicy Turkish minced meat kebabs served with pita and hummus.",
-                image: "https://images.pexels.com/photos/5946633/pexels-photo-5946633.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 28,
-                name: "Desi Ghee Lamb Chops",
-                price: 4200,
-                category: "bbq",
-                description: "Juicy lamb chops marinated in yogurt and pan-fried in pure desi ghee.",
-                image: "https://images.pexels.com/photos/410648/pexels-photo-410648.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 29,
-                name: "College Hangout Deal",
-                price: 2800,
-                category: "main",
-                description: "4 ZFC Burgers, 2 Jumbo Fries, and 1.5L Coke. Best for college friends and groups.",
-                image: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 30,
-                name: "Romantic Dinner Date",
-                price: 5500,
-                category: "main",
-                description: "2 Premium Steaks, 1 Chocolate Lava Cake, and 2 Mint Margaritas. Includes table decoration.",
-                image: "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 31,
-                name: "Royal Family Feast",
-                price: 12500,
-                category: "main",
-                description: "Full Mutton Karahi, 2 Large Pizzas, BBQ Platter, 2L Drinks, and 12 Gulab Jamuns. Serves 6-8.",
-                image: "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 32,
-                name: "Executive Business Buffet",
-                price: 4500,
-                category: "main",
-                description: "Unlimited BBQ, 3 types of Handi, Chinese, Salad Bar, and Tea. Perfect for corporate meetings.",
-                image: "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 33,
-                name: "ZFC Birthday Blast Pack",
-                price: 15000,
-                category: "main",
-                description: "Party for 10! Mixed BBQ, Fast Food Platter, Customized Cake, and unlimited soft drinks.",
-                image: "https://images.pexels.com/photos/587741/pexels-photo-587741.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 34,
-                name: "Couple's BBQ Night",
-                price: 3200,
-                category: "bbq",
-                description: "Seekh Kabab, Malai Boti, Chicken Tikka, Raita, and Hot Naans. Specially for two.",
-                image: "https://images.pexels.com/photos/5410400/pexels-photo-5410400.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 35,
-                name: "Weekend Brunch Group",
-                price: 4800,
-                category: "main",
-                description: "Special Halwa Puri, Nihari, Paye, and Lassi for a group of 4. Only on Saturday/Sunday.",
-                image: "https://images.pexels.com/photos/103124/pexels-photo-103124.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 36,
-                name: "ZFC Signature Elite Deal",
-                price: 25000,
-                category: "main",
-                description: "The most expensive deal. Stuffed Lamb, Seafood Mix, Royal Desserts, and Private Cabin for 12.",
-                image: "https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 35,
-                name: "Classic Margherita",
-                price: 1200,
-                category: "pizza",
-                description: "Traditional Italian style with fresh tomato sauce, basil, and pure mozzarella.",
-                image: "https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 36,
-                name: "ZFC Signature Tikka",
-                price: 1650,
-                category: "pizza",
-                description: "Desi style spicy chicken tikka chunks with onions and green peppers.",
-                image: "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 37,
-                name: "Spicy Chicken Fajita",
-                price: 1750,
-                category: "pizza",
-                description: "Marinated fajita chicken, jalapeños, olives, and extra stringy cheese.",
-                image: "https://images.pexels.com/photos/10790638/pexels-photo-10790638.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 38,
-                name: "Premium Pepperoni Feast",
-                price: 1850,
-                category: "pizza",
-                description: "Loaded with premium beef pepperoni slices and double mozzarella.",
-                image: "https://images.pexels.com/photos/1552635/pexels-photo-1552635.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 39,
-                name: "ZFC Stuffed Crust Gold",
-                price: 2200,
-                category: "pizza",
-                description: "Cheese-filled crust with any topping of your choice. A 7-star favorite.",
-                image: "https://images.pexels.com/photos/2619967/pexels-photo-2619967.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 40,
-                name: "Veggie Delight Supreme",
-                price: 1400,
-                category: "pizza",
-                description: "Corn, mushrooms, olives, peppers, and onions. Healthy and delicious.",
-                image: "https://images.pexels.com/photos/3652899/pexels-photo-3652899.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 41,
-                name: "Smokey BBQ Chicken Pizza",
-                price: 1800,
-                category: "pizza",
-                description: "BBQ sauce base with grilled chicken, red onions, and sweet corn.",
-                image: "https://images.pexels.com/photos/4394612/pexels-photo-4394612.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 42,
-                name: "Royal Seafood Pizza",
-                price: 2800,
-                category: "pizza",
-                description: "Premium topping of prawns and tuna with a hint of garlic and herbs.",
-                image: "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-             {
-                 id: 43,
-              name: "Club Sandwich Max",
-               price: 750,
-                category: "pizza",
-                description:"zfc king",
-                 image: "https://images.pexels.com/photos/1600727/pexels-photo-1600727.jpeg?auto=compress&cs=tinysrgb&w=600"
-                 },
-                {
-                 id: 44,
-                name: "Assorted Turkish Baklava Box",
-                price: 2500,
-                category: "sweets",
-                description: "Premium 500g box of authentic Turkish Baklava with pistachios and honey.",
-                image: "https://images.pexels.com/photos/10313462/pexels-photo-10313462.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 45,
-                name: "Belgian Chocolate Fudge Cake",
-                price: 3800,
-                category: "sweets",
-                description: "Full 2lbs rich chocolate cake made with premium Belgian cocoa and dark chocolate.",
-                image: "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 46,
-                name: "New York Cheesecake (Slice)",
-                price: 850,
-                category: "sweets",
-                description: "Creamy, smooth cheesecake on a graham cracker crust with strawberry topping.",
-                image: "https://images.pexels.com/photos/1126359/pexels-photo-1126359.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 47,
-                name: "ZFC Royal Shahi Tukray",
-                price: 1200,
-                category: "sweets",
-                description: "Traditional bread pudding slow-cooked in thick saffron milk and dry fruits.",
-                image: "https://images.pexels.com/photos/1359302/pexels-photo-1359302.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 48,
-                name: "Premium Macarons Gift Box",
-                price: 1800,
-                category: "sweets",
-                description: "Box of 12 colorful French macarons with assorted flavors like lavender, rose, and pistachio.",
-                image: "https://images.pexels.com/photos/239578/pexels-photo-239578.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 49,
-                name: "Custom Fondant Celebration Cake",
-                price: 4800,
-                category: "sweets",
-                description: "2kg custom designed cake for birthdays or anniversaries with edible fondant art.",
-                image: "https://images.pexels.com/photos/1702373/pexels-photo-1702373.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 50,
-                name: "Desi Ghee Gajar Ka Halwa",
-                price: 950,
-                category: "sweets",
-                description: "Fresh carrots slow-cooked in pure desi ghee and khoya. A winter special.",
-                image: "https://images.pexels.com/photos/5639413/pexels-photo-5639413.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 51,
-                name: "Premium Assorted Cookies Bucket",
-                price: 1500,
-                category: "sweets",
-                description: "1kg freshly baked bakery cookies including Almond, Chocolate Chip, and Pistachio.",
-                image: "https://images.pexels.com/photos/230325/pexels-photo-230325.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 52,
-                name: "ZFC Gold Leaf Matka Kheer",
-                price: 2200,
-                category: "sweets",
-                description: "Elite kheer served in traditional clay pots decorated with real edible gold leaf.",
-                image: "https://images.pexels.com/photos/4087611/pexels-photo-4087611.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 53,
-                name: "Premium Fettuccine Alfredo",
-                price: 1850,
-                category: "main",
-                description: "Creamy white sauce pasta with grilled chicken chunks, mushrooms, and imported parmesan cheese.",
-                image: "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-           
-            {
-                id: 55,
-                name: "Royal Mutton Raan Roast",
-                price: 7500,
-                category: "main",
-                description: "Whole leg of lamb slow-roasted for 8 hours, marinated in secret ZFC royal spices. Serves 4-5.",
-                image: "https://images.pexels.com/photos/541216/pexels-photo-541216.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 56,
-                name: "Spicy Seafood Penne",
-                price: 2400,
-                category: "main",
-                description: "Penne pasta tossed in spicy red arrabbiata sauce with sautéed prawns and calamari.",
-                image: "https://images.pexels.com/photos/14737/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 57,
-                name: "Saffron Pistachio Kheer",
-                price: 1100,
-                category: "sweets",
-                description: "Traditional slow-cooked rice pudding infused with pure saffron and topped with roasted pistachios.",
-                image: "https://images.pexels.com/photos/1359302/pexels-photo-1359302.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-           
-            {
-                id: 59,
-                name: "Premium Beef Nalli Nihari",
-                price: 3200,
-                category: "main",
-                description: "Buffalo meat slow-cooked to perfection with bone marrow (Nalli) and authentic Nihari spices. Served with ginger and lemon.",
-                image: "https://images.pexels.com/photos/604969/pexels-photo-604969.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 60,
-                name: "ZFC Special Beef Karahi",
-                price: 2800,
-                category: "main",
-                description: "Fresh buffalo meat stir-fried in a wok with tomatoes, green chilies, and black pepper. Authentic 7-star taste.",
-                image: "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 61,
-                name: "Baked Chicken Lasagna",
-                price: 2100,
-                category: "main",
-                description: "Layers of pasta sheet filled with minced chicken, red sauce, and topped with a heavy layer of melted mozzarella and cheddar.",
-                image: "https://images.pexels.com/photos/5949900/pexels-photo-5949900.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 62,
-                name: "Exotic Fruit Trifle Custard",
-                price: 1250,
-                category: "sweets",
-                description: "Multi-layered dessert with vanilla custard, fresh seasonal fruits, jelly, and soft sponge cake. A family favorite.",
-                image: "https://images.pexels.com/photos/2693447/pexels-photo-2693447.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 63,
-                name: "Premium Fruit Cream Salad",
-                price: 1450,
-                category: "sweets",
-                description: "A rich mix of fresh fruits, cocktail fruits, and dry fruits folded into chilled, whipped fresh cream.",
-                image: "https://images.pexels.com/photos/11305342/pexels-photo-11305342.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 64,
-                name: "Creamy Chicken Macaroni",
-                price: 1650,
-                category: "main",
-                description: "Italian style macaroni tossed in a rich, creamy bechamel sauce with tender chicken chunks and bell peppers.",
-                image: "https://images.pexels.com/photos/1438672/pexels-photo-1438672.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-             {
-                id: 14,
-                name: "Bana Shake",
-                price: 400,
-                category: "drinks",
-                description: "Thick and creamy mango shake",
-                image: "https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
-            {
-                id: 15,
-                name: "Beef Burger Deluxe",
-                price: 850,
-                category: "fast-food",
-                description: "Juicy beef patty with fresh toppings",
-                image: "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=600"
-            },
+            { id: 9, name: "Club Sandwich Max", price: 750, category: "fast-food", description: "Triple decker sandwich with chicken and vegetables", image: "https://images.pexels.com/photos/1600727/pexels-photo-1600727.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 10, name: "Chicken Biryani Full", price: 950, category: "main", description: "Aromatic basmati rice with tender chicken", image: "https://images.pexels.com/photos/7394851/pexels-photo-7394851.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 11, name: "Chicken Tikka BBQ", price: 1600, category: "bbq", description: "Marinated chicken pieces grilled to perfection", image: "https://images.pexels.com/photos/5410400/pexels-photo-5410400.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 12, name: "Special Fish Fry", price: 1800, category: "main", description: "Fresh fish marinated and fried with spices", image: "https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 13, name: "Mango Shake", price: 400, category: "drinks", description: "Thick and creamy mango shake", image: "https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 14, name: "Beef Burger Deluxe", price: 850, category: "fast-food", description: "Juicy beef patty with fresh toppings", image: "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 15, name: "Malai Boti", price: 1500, category: "bbq", description: "Creamy marinated chicken tikka", image: "https://images.pexels.com/photos/6210876/pexels-photo-6210876.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 16, name: "Gulab Jamun", price: 500, category: "dessert", description: "Traditional sweet dumplings in sugar syrup", image: "https://images.pexels.com/photos/4087611/pexels-photo-4087611.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 17, name: "Fresh Lime Soda", price: 300, category: "drinks", description: "Refreshing lime drink with soda", image: "https://images.pexels.com/photos/1233319/pexels-photo-1233319.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 18, name: "zaytoon Royal Mutton Karahi", price: 3800, category: "main", description: "Premium mutton cooked in traditional desi ghee with secret zaytoon spices.", image: "https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 19, name: "Executive T-Bone Steak", price: 4500, category: "main", description: "Prime cut beef steak served with grilled vegetables and mushroom sauce.", image: "https://images.pexels.com/photos/675951/pexels-photo-675951.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 20, name: "Jumbo Grilled Prawns", price: 5200, category: "bbq", description: "Fresh jumbo prawns marinated in lemon butter and charcoal grilled.", image: "https://images.pexels.com/photos/566344/pexels-photo-566344.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 21, name: "Whole Stuffed Sajji", price: 2800, category: "main", description: "Full chicken stuffed with aromatic rice and slow-roasted over charcoal.", image: "https://images.pexels.com/photos/233305/pexels-photo-233305.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 22, name: "Grand zaytoon BBQ Platter", price: 4800, category: "bbq", description: "A royal mix of Kababs, Tikka, Malai Boti, and Chops for the whole family.", image: "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 23, name: "Beef Wellington Exclusive", price: 6500, category: "main", description: "Tender beef fillet wrapped in puff pastry with mushroom duxelles.", image: "https://images.pexels.com/photos/7613568/pexels-photo-7613568.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 24, name: "Mutton Kunna Clay Pot", price: 3400, category: "main", description: "Traditional Chinioti Mutton Kunna slow-cooked in a clay pot for 6 hours.", image: "https://images.pexels.com/photos/106343/pexels-photo-106343.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 25, name: "Grilled Lobster Tail", price: 6800, category: "main", description: "Premium lobster tail served with garlic butter sauce and saffron rice.", image: "https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 26, name: "Turkish Adana Kebab Platter", price: 3500, category: "bbq", description: "Authentic spicy Turkish minced meat kebabs served with pita and hummus.", image: "https://images.pexels.com/photos/5946633/pexels-photo-5946633.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 27, name: "Desi Ghee Lamb Chops", price: 4200, category: "bbq", description: "Juicy lamb chops marinated in yogurt and pan-fried in pure desi ghee.", image: "https://images.pexels.com/photos/410648/pexels-photo-410648.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 28, name: "College Hangout Deal", price: 2800, category: "main", description: "4 zaytoon Burgers, 2 Jumbo Fries, and 1.5L Coke. Best for college friends and groups.", image: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 29, name: "Romantic Dinner Date", price: 5500, category: "main", description: "2 Premium Steaks, 1 Chocolate Lava Cake, and 2 Mint Margaritas. Includes table decoration.", image: "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 30, name: "Royal Family Feast", price: 12500, category: "main", description: "Full Mutton Karahi, 2 Large Pizzas, BBQ Platter, 2L Drinks, and 12 Gulab Jamuns. Serves 6-8.", image: "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 31, name: "Executive Business Buffet", price: 4500, category: "main", description: "Unlimited BBQ, 3 types of Handi, Chinese, Salad Bar, and Tea. Perfect for corporate meetings.", image: "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 32, name: "zaytoon Birthday Blast Pack", price: 15000, category: "main", description: "Party for 10! Mixed BBQ, Fast Food Platter, Customized Cake, and unlimited soft drinks.", image: "https://images.pexels.com/photos/587741/pexels-photo-587741.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 33, name: "Couple's BBQ Night", price: 3200, category: "bbq", description: "Seekh Kabab, Malai Boti, Chicken Tikka, Raita, and Hot Naans. Specially for two.", image: "https://images.pexels.com/photos/5410400/pexels-photo-5410400.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 34, name: "Weekend Brunch Group", price: 4800, category: "main", description: "Special Halwa Puri, Nihari, Paye, and Lassi for a group of 4. Only on Saturday/Sunday.", image: "https://images.pexels.com/photos/103124/pexels-photo-103124.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 35, name: "zaytoon Signature Elite Deal", price: 25000, category: "main", description: "The most expensive deal. Stuffed Lamb, Seafood Mix, Royal Desserts, and Private Cabin for 12.", image: "https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 36, name: "Classic Margherita", price: 1200, category: "pizza", description: "Traditional Italian style with fresh tomato sauce, basil, and pure mozzarella.", image: "https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 37, name: "zaytoon Signature Tikka", price: 1650, category: "pizza", description: "Desi style spicy chicken tikka chunks with onions and green peppers.", image: "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 38, name: "Spicy Chicken Fajita", price: 1750, category: "pizza", description: "Marinated fajita chicken, jalapeños, olives, and extra stringy cheese.", image: "https://images.pexels.com/photos/10790638/pexels-photo-10790638.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 39, name: "Premium Pepperoni Feast", price: 1850, category: "pizza", description: "Loaded with premium beef pepperoni slices and double mozzarella.", image: "https://images.pexels.com/photos/1552635/pexels-photo-1552635.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 40, name: "zaytoon Stuffed Crust Gold", price: 2200, category: "pizza", description: "Cheese-filled crust with any topping of your choice. A 7-star favorite.", image: "https://images.pexels.com/photos/2619967/pexels-photo-2619967.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 41, name: "Veggie Delight Supreme", price: 1400, category: "pizza", description: "Corn, mushrooms, olives, peppers, and onions. Healthy and delicious.", image: "https://images.pexels.com/photos/3652899/pexels-photo-3652899.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 42, name: "Smokey BBQ Chicken Pizza", price: 1800, category: "pizza", description: "BBQ sauce base with grilled chicken, red onions, and sweet corn.", image: "https://images.pexels.com/photos/4394612/pexels-photo-4394612.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 43, name: "Royal Seafood Pizza", price: 2800, category: "pizza", description: "Premium topping of prawns and tuna with a hint of garlic and herbs.", image: "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 44, name: "Club Sandwich Max (Pizza)", price: 750, category: "pizza", description:"zaytoon king", image: "https://images.pexels.com/photos/1600727/pexels-photo-1600727.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 45, name: "Assorted Turkish Baklava Box", price: 2500, category: "sweets", description: "Premium 500g box of authentic Turkish Baklava with pistachios and honey.", image: "https://images.pexels.com/photos/10313462/pexels-photo-10313462.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 46, name: "Belgian Chocolate Fudge Cake", price: 3800, category: "sweets", description: "Full 2lbs rich chocolate cake made with premium Belgian cocoa and dark chocolate.", image: "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 47, name: "New York Cheesecake (Slice)", price: 850, category: "sweets", description: "Creamy, smooth cheesecake on a graham cracker crust with strawberry topping.", image: "https://images.pexels.com/photos/1126359/pexels-photo-1126359.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 48, name: "zaytoon Royal Shahi Tukray", price: 1200, category: "sweets", description: "Traditional bread pudding slow-cooked in thick saffron milk and dry fruits.", image: "https://images.pexels.com/photos/1359302/pexels-photo-1359302.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 49, name: "Premium Macarons Gift Box", price: 1800, category: "sweets", description: "Box of 12 colorful French macarons with assorted flavors like lavender, rose, and pistachio.", image: "https://images.pexels.com/photos/239578/pexels-photo-239578.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 50, name: "Custom Fondant Celebration Cake", price: 4800, category: "sweets", description: "2kg custom designed cake for birthdays or anniversaries with edible fondant art.", image: "https://images.pexels.com/photos/1702373/pexels-photo-1702373.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 51, name: "Desi Ghee Gajar Ka Halwa", price: 950, category: "sweets", description: "Fresh carrots slow-cooked in pure desi ghee and khoya. A winter special.", image: "https://images.pexels.com/photos/5639413/pexels-photo-5639413.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 52, name: "Premium Assorted Cookies Bucket", price: 1500, category: "sweets", description: "1kg freshly baked bakery cookies including Almond, Chocolate Chip, and Pistachio.", image: "https://images.pexels.com/photos/230325/pexels-photo-230325.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 53, name: "zaytoon Gold Leaf Matka Kheer", price: 2200, category: "sweets", description: "Elite kheer served in traditional clay pots decorated with real edible gold leaf.", image: "https://images.pexels.com/photos/4087611/pexels-photo-4087611.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 54, name: "Premium Fettuccine Alfredo", price: 1850, category: "main", description: "Creamy white sauce pasta with grilled chicken chunks, mushrooms, and imported parmesan cheese.", image: "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 55, name: "Royal Mutton Raan Roast", price: 7500, category: "main", description: "Whole leg of lamb slow-roasted for 8 hours, marinated in secret zaytoon royal spices. Serves 4-5.", image: "https://images.pexels.com/photos/541216/pexels-photo-541216.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 56, name: "Spicy Seafood Penne", price: 2400, category: "main", description: "Penne pasta tossed in spicy red arrabbiata sauce with sautéed prawns and calamari.", image: "https://images.pexels.com/photos/14737/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 57, name: "Saffron Pistachio Kheer", price: 1100, category: "sweets", description: "Traditional slow-cooked rice pudding infused with pure saffron and topped with roasted pistachios.", image: "https://images.pexels.com/photos/1359302/pexels-photo-1359302.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 58, name: "Premium Beef Nalli Nihari", price: 3200, category: "main", description: "Buffalo meat slow-cooked to perfection with bone marrow (Nalli) and authentic Nihari spices. Served with ginger and lemon.", image: "https://images.pexels.com/photos/604969/pexels-photo-604969.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 59, name: "zaytoon Special Beef Karahi", price: 2800, category: "main", description: "Fresh buffalo meat stir-fried in a wok with tomatoes, green chilies, and black pepper. Authentic 7-star taste.", image: "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 60, name: "Baked Chicken Lasagna", price: 2100, category: "main", description: "Layers of pasta sheet filled with minced chicken, red sauce, and topped with a heavy layer of melted mozzarella and cheddar.", image: "https://images.pexels.com/photos/5949900/pexels-photo-5949900.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 61, name: "Exotic Fruit Trifle Custard", price: 1250, category: "sweets", description: "Multi-layered dessert with vanilla custard, fresh seasonal fruits, jelly, and soft sponge cake. A family favorite.", image: "https://images.pexels.com/photos/2693447/pexels-photo-2693447.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 62, name: "Premium Fruit Cream Salad", price: 1450, category: "sweets", description: "A rich mix of fresh fruits, cocktail fruits, and dry fruits folded into chilled, whipped fresh cream.", image: "https://images.pexels.com/photos/11305342/pexels-photo-11305342.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 63, name: "Creamy Chicken Macaroni", price: 1650, category: "main", description: "Italian style macaroni tossed in a rich, creamy bechamel sauce with tender chicken chunks and bell peppers.", image: "https://images.pexels.com/photos/1438672/pexels-photo-1438672.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 64, name: "Bana Shake", price: 400, category: "drinks", description: "Thick and creamy banana shake", image: "https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 65, name: "Double Beef Burger Deluxe", price: 1050, category: "fast-food", description: "Double juicy beef patty with fresh toppings", image: "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 66, name: "Crispy Chicken Strips", price: 700, category: "fast-food", description: "Golden fried chicken strips with dipping sauce", image: "https://images.pexels.com/photos/60616/fried-chicken-gold-salt-batter-60616.jpeg?auto=compress&cs=tinysrgb&w=600"}
         ];
 
-        let cart = [];
-        let deliveryOption = 'delivery'; // Default delivery option
+
+        // Function to seed initial menu items into Firestore
+        async function seedMenuItems() {
+            const menuItemsCollection = collection(db, 'menuItems');
+            
+            // Check if any items exist in Firestore. We only seed if the collection is truly empty.
+            const existingItemsSnapshot = await getDocs(menuItemsCollection);
+            if (!existingItemsSnapshot.empty) {
+                console.log("Firebase 'menuItems' collection already has items. Skipping initial seeding.");
+                return;
+            }
+
+            console.log("Firebase 'menuItems' collection is empty. Seeding initial items...");
+            let itemsAdded = 0;
+            for (const item of initialMenuItemsToSeed) {
+                try {
+                    // Using setDoc with item.id.toString() to ensure Firebase document IDs match our local IDs
+                    // This is important for consistency in cart operations later.
+                    await setDoc(doc(db, 'menuItems', item.id.toString()), {
+                        name: item.name,
+                        description: item.description,
+                        price: item.price,
+                        category: item.category,
+                        image: item.image,
+                        timestamp: serverTimestamp() // Add a timestamp for consistency
+                    });
+                    itemsAdded++;
+                } catch (error) {
+                    console.error("Error seeding menu item:", item.name, error);
+                }
+            }
+
+            if (itemsAdded > 0) {
+                console.log(`Successfully added ${itemsAdded} initial menu items to Firestore.`);
+            } else {
+                console.log("No initial menu items were added (possibly due to errors during seeding).");
+            }
+        }
+
+
+        // Function to load settings from Firestore
+        async function loadSettings() {
+            const settingsDocRef = doc(db, 'settings', 'websiteSettings');
+            const docSnap = await getDoc(settingsDocRef);
+            if (docSnap.exists()) {
+                const settings = docSnap.data();
+                frontendContactNumbers = settings.contactNumbers || {};
+                frontendPaymentDetails = settings.paymentDetails || {};
+                autoReplyMessage = settings.autoReplyMessage || "Thank you for your message! We will get back to you shortly.";
+
+                // Update frontend elements with loaded settings
+                document.getElementById('booking-call-number').textContent = frontendContactNumbers.call || '+92 318 8791637';
+                document.getElementById('contact-phone').textContent = frontendContactNumbers.call || '+92 318 8791637';
+                document.getElementById('footer-phone-number').textContent = frontendContactNumbers.call || '+92 318 8791637';
+                
+                document.getElementById('checkout-jazzcash-num').textContent = frontendPaymentDetails.jazzcash || '0304-9472735';
+                document.getElementById('checkout-easypaisa-num').textContent = frontendPaymentDetails.easypaisa || '0318-8791637';
+                document.getElementById('checkout-bank-acc-no').textContent = frontendPaymentDetails.bankAccNo || '1234567890';
+                document.getElementById('checkout-bank-acc-holder').textContent = frontendPaymentDetails.bankAccHolder || 'Zaytoon Garden';
+                document.getElementById('checkout-bank-name').textContent = frontendPaymentDetails.bankName || 'HBL';
+            } else {
+                // If settings don't exist, create default ones
+                await setDoc(settingsDocRef, {
+                    contactNumbers: {
+                        whatsapp: '+923188791637',
+                        call: '+923188791637',
+                        sms: '+923188791637'
+                    },
+                    paymentDetails: {
+                        jazzcash: '0304-9472735',
+                        easypaisa: '0318-8791637',
+                        bankAccNo: '1234567890',
+                        bankAccHolder: 'Zaytoon Garden',
+                        bankName: 'HBL'
+                    },
+                    autoReplyMessage: "Thank you for your message! We will get back to you shortly."
+                });
+                console.log("Default settings created.");
+                loadSettings(); // Reload settings after creating defaults
+            }
+        }
+
 
         // Initialize
-        window.addEventListener('load', () => {
+        window.addEventListener('load', async () => {
+            await loadSettings(); // Load settings first
+            await seedMenuItems(); // Call the seeding function here to add default items if not present
+            
             setTimeout(() => {
                 document.getElementById('loading-screen').style.opacity = '0';
                 setTimeout(() => {
@@ -2442,10 +2405,44 @@
             }, 1000);
 
             AOS.init({ duration: 1000, once: true });
-            renderMenu('all');
+            
+            // Listen for real-time menu item updates from Firebase
+            onSnapshot(collection(db, 'menuItems'), (snapshot) => {
+                menuItemsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderMenu('all'); // Re-render menu whenever data changes
+                if (adminLoggedIn) {
+                    renderAdminMenuItems(); // Re-render admin menu list too
+                }
+            }, (error) => {
+                console.error("Error fetching menu items:", error);
+                showNotification("Failed to load menu items.", "error");
+            });
+
             setupEventListeners();
             loadCartFromStorage();
             updateCartSummary(); // Ensure summary is updated on load with default delivery
+            
+            // Check admin login status on page load
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    adminLoggedIn = true;
+                    console.log("Admin is logged in.");
+                    // Optionally show admin panel directly if already logged in, or update UI elements
+                } else {
+                    adminLoggedIn = false;
+                    console.log("Admin is logged out.");
+                }
+            });
+
+            // Set up listener for user chat modal to load history
+            const userChatModalElement = document.getElementById('userChatModal');
+            userChatModalElement.addEventListener('show.bs.modal', setupUserChat);
+            userChatModalElement.addEventListener('hidden.bs.modal', () => {
+                // Clear chat when modal is closed
+                document.getElementById('user-chat-messages').innerHTML = '';
+                localStorage.removeItem('userChatId'); // Clear stored chat ID
+                localStorage.removeItem('userChatName'); // Clear stored chat name
+            });
         });
 
         // Sticky Navbar
@@ -2461,7 +2458,7 @@
         function renderMenu(category) {
             const container = document.getElementById('menu-container');
             container.innerHTML = '';
-            const filtered = category === 'all' ? menuItems : menuItems.filter(i => i.category === category);
+            const filtered = category === 'all' ? menuItemsData : menuItemsData.filter(i => i.category === category);
 
             if (filtered.length === 0) {
                 container.innerHTML = `<div class="col-12 text-center py-5"><p class="lead text-muted">No items found in this category.</p></div>`;
@@ -2475,7 +2472,7 @@
                         <div class="menu-item">
                             <div class="menu-item-image">
                                 <span class="menu-badge">${item.category.replace(/-/g, ' ')}</span>
-                                <img src="${item.image}" alt="${item.name}">
+                                <img src="${item.image || 'https://via.placeholder.com/250x250?text=No+Image'}" alt="${item.name}">
                             </div>
                             <div class="menu-item-content">
                                 <h5>${item.name}</h5>
@@ -2484,12 +2481,12 @@
                                     <span class="menu-price">Rs. ${item.price}</span>
                                     ${qty > 0 ? `
                                         <div class="quantity-controls">
-                                            <button class="quantity-btn" onclick="decreaseQuantity(${item.id})">-</button>
+                                            <button class="quantity-btn" onclick="decreaseQuantity('${item.id}')">-</button>
                                             <span class="px-3">${qty}</span>
-                                            <button class="quantity-btn" onclick="increaseQuantity(${item.id})">+</button>
+                                            <button class="quantity-btn" onclick="increaseQuantity('${item.id}')">+</button>
                                         </div>
                                     ` : `
-                                        <button class="add-to-cart-btn" onclick="addToCart(${item.id})">
+                                        <button class="add-to-cart-btn" onclick="addToCart('${item.id}')">
                                             <i class="fas fa-plus me-1"></i>Add
                                         </button>
                                     `}
@@ -2515,28 +2512,40 @@
                 details.style.display = e.target.value !== 'cod' ? 'block' : 'none';
             });
 
-            // Delivery option selection
             document.querySelectorAll('.delivery-option').forEach(option => {
                 option.addEventListener('click', () => {
-                    document.querySelectorAll('.delivery-option').forEach(opt => opt.classList.remove('active'));
-                    option.classList.add('active');
-                    deliveryOption = option.dataset.option;
-                    
-                    const addressGroup = document.getElementById('address-group');
-                    if (deliveryOption === 'pickup') {
-                        addressGroup.style.display = 'none';
-                        document.getElementById('customer-address').removeAttribute('required');
-                    } else {
-                        addressGroup.style.display = 'block';
-                        document.getElementById('customer-address').setAttribute('required', 'required');
-                    }
-                    updateCartSummary();
+                    setDeliveryOption(option.dataset.option);
                 });
             });
 
-
             document.getElementById('checkout-form').addEventListener('submit', placeOrder);
             document.getElementById('admin-login-form').addEventListener('submit', adminLogin);
+            document.getElementById('menu-item-form').addEventListener('submit', handleMenuItemFormSubmit);
+            document.getElementById('booking-form').addEventListener('submit', handleBookingFormSubmit);
+            
+            // User chat event listeners
+            document.getElementById('userChatSendBtn').addEventListener('click', sendUserMessage);
+            document.getElementById('userChatMessageInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendUserMessage();
+            });
+
+            // Admin chat event listener (for modal)
+            document.getElementById('adminChatSendBtn').addEventListener('click', sendAdminMessage);
+            document.getElementById('adminChatInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendAdminMessage();
+            });
+
+            // Admin settings event listeners
+            document.getElementById('contact-numbers-form').addEventListener('submit', saveContactNumbers);
+            document.getElementById('payment-details-form').addEventListener('submit', savePaymentDetails);
+            document.getElementById('auto-reply-form').addEventListener('submit', saveAutoReplyMessage);
+
+
+            document.getElementById('subscribe-button').addEventListener('click', () => {
+                const statusElement = document.getElementById('subscription-status');
+                statusElement.textContent = 'Thank you for subscribing! We\'ll keep you updated.';
+                // You could also add Firebase Cloud Messaging subscription logic here
+            });
         }
 
         window.setDeliveryOption = (option) => {
@@ -2556,7 +2565,7 @@
         }
 
         window.addToCart = (id) => {
-            const item = menuItems.find(i => i.id === id);
+            const item = menuItemsData.find(i => i.id === id);
             const existing = cart.find(i => i.id === id);
             if (existing) existing.quantity++;
             else cart.push({ ...item, quantity: 1 });
@@ -2580,6 +2589,7 @@
                 if (item.quantity > 1) item.quantity--;
                 else cart = cart.filter(i => i.id !== id);
                 updateCart();
+                renderCart(); // Call renderCart directly to update cart modal content
                 renderMenu(document.querySelector('.category-btn.active').dataset.category);
             }
         };
@@ -2606,15 +2616,15 @@
 
             container.innerHTML = cart.map(item => `
                 <div class="d-flex align-items-center p-3 border-bottom cart-item-row">
-                    <img src="${item.image}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;" alt="${item.name}">
+                    <img src="${item.image || 'https://via.placeholder.com/80x80?text=No+Image'}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;" alt="${item.name}">
                     <div class="flex-grow-1 ms-3">
                         <h6>${item.name}</h6>
                         <p class="mb-0 text-success">Rs. ${item.price} × ${item.quantity}</p>
                     </div>
                     <div class="quantity-controls me-3">
-                        <button class="quantity-btn" onclick="decreaseQuantity(${item.id})">-</button>
+                        <button class="quantity-btn" onclick="decreaseQuantity('${item.id}')">-</button>
                         <span class="px-3">${item.quantity}</span>
-                        <button class="quantity-btn" onclick="increaseQuantity(${item.id})">+</button>
+                        <button class="quantity-btn" onclick="increaseQuantity('${item.id}')">+</button>
                     </div>
                 </div>
             `).join('');
@@ -2707,7 +2717,7 @@
                 paymentMethod,
                 paymentScreenshot: paymentScreenshotURL,
                 status: 'Pending',
-                timestamp: new Date().toISOString(),
+                timestamp: serverTimestamp(),
                 date: new Date().toLocaleDateString('en-GB'),
                 time: new Date().toLocaleTimeString('en-GB')
             };
@@ -2715,7 +2725,8 @@
             try {
                 await addDoc(collection(db, 'orders'), order);
                 
-                // Construct WhatsApp message
+                // Construct WhatsApp message (using dynamic number from settings)
+                const whatsappNumber = frontendContactNumbers.whatsapp || '923188791637'; // Default if not set
                 let whatsappMessage = `🎉 *NEW ORDER #${orderNumber}* 🎉\n\n`;
                 whatsappMessage += `*📋 Customer:* ${name}\n`;
                 whatsappMessage += `*📱 Phone:* ${phone}\n`;
@@ -2740,7 +2751,7 @@
                 }
                 whatsappMessage += `\n_Please confirm the order and prepare for ${deliveryOption === 'delivery' ? 'delivery' : 'pickup'}._`;
 
-                window.open(`https://wa.me/923188791637?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+                window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
 
                 cart = [];
                 localStorage.removeItem('cart');
@@ -2756,38 +2767,121 @@
             }
         }
 
+        async function handleBookingFormSubmit(e) {
+            e.preventDefault();
+
+            const booking = {
+                name: document.getElementById('booking-name').value,
+                phone: document.getElementById('booking-phone').value,
+                email: document.getElementById('booking-email').value,
+                date: document.getElementById('booking-date').value,
+                time: document.getElementById('booking-time').value,
+                guests: document.getElementById('booking-guests').value,
+                message: document.getElementById('booking-message').value,
+                status: 'Pending',
+                timestamp: serverTimestamp()
+            };
+
+            try {
+                await addDoc(collection(db, 'bookings'), booking);
+                showNotification('Booking submitted successfully! We will confirm shortly.', 'success');
+                document.getElementById('booking-form').reset();
+
+                // Send WhatsApp notification to admin for booking
+                const whatsappNumber = frontendContactNumbers.whatsapp || '923188791637';
+                let whatsappMessage = `📅 *NEW TABLE BOOKING* 📅\n\n`;
+                whatsappMessage += `*👤 Name:* ${booking.name}\n`;
+                whatsappMessage += `*📱 Phone:* ${booking.phone}\n`;
+                whatsappMessage += `*📧 Email:* ${booking.email}\n`;
+                whatsappMessage += `*🗓️ Date:* ${booking.date}\n`;
+                whatsappMessage += `*⏰ Time:* ${booking.time}\n`;
+                whatsappMessage += `*👨‍👩‍👧‍👦 Guests:* ${booking.guests}\n`;
+                if (booking.message) {
+                    whatsappMessage += `*📝 Requests:* ${booking.message}\n`;
+                }
+                whatsappMessage += `\n_Please review and confirm the booking._`;
+                window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+
+            } catch (error) {
+                console.error("Error submitting booking:", error);
+                showNotification('Error submitting booking: ' + error.message, 'error');
+            }
+        }
+
         window.showAdminLogin = () => {
             new bootstrap.Modal(document.getElementById('adminLoginModal')).show();
         };
 
         async function adminLogin(e) {
             e.preventDefault();
-            const email = document.getElementById('admin-email').value;
+            const email = document.getElementById('admin-email').value.trim();
             const password = document.getElementById('admin-password').value;
-
             try {
                 await signInWithEmailAndPassword(auth, email, password);
+                adminLoggedIn = true;
                 bootstrap.Modal.getInstance(document.getElementById('adminLoginModal')).hide();
                 showAdmin();
                 showNotification('Admin login successful!', 'success');
             } catch (error) {
-                showNotification('Invalid credentials!', 'error');
+                if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                    showNotification('Invalid email or password!', 'error');
+                } else {
+                    showNotification('Error: ' + error.message, 'error');
+                }
                 console.error("Admin Login Error:", error);
             }
         }
 
+        window.adminLogout = async () => {
+            try {
+                await signOut(auth);
+                adminLoggedIn = false;
+                closeAdmin();
+                showNotification('Admin logged out successfully.', 'success');
+            } catch (error) {
+                console.error("Error logging out:", error);
+                showNotification('Error logging out: ' + error.message, 'error');
+            }
+        };
+
         function showAdmin() {
-            document.getElementById('admin-panel').style.display = 'block';
+            document.getElementById('admin-panel').style.display = 'flex'; // Use flex for sidebar layout
             loadAdminData();
+            showAdminSection('dashboard-overview'); // Show dashboard by default
         }
 
         window.closeAdmin = () => {
             document.getElementById('admin-panel').style.display = 'none';
         };
 
+        window.showAdminSection = (sectionId) => {
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.querySelectorAll('.admin-sidebar .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            document.getElementById(sectionId).style.display = 'block';
+            document.querySelector(`.admin-sidebar .nav-link[href="#${sectionId}"]`).classList.add('active');
+
+            // Trigger specific loaders for each section
+            if (sectionId === 'admin-orders-list' || sectionId === 'dashboard-overview') {
+                loadAdminOrders();
+            } else if (sectionId === 'admin-menu-management') {
+                renderAdminMenuItems(); // This is updated by the onSnapshot listener already
+            } else if (sectionId === 'admin-bookings-list') {
+                loadAdminBookings();
+            } else if (sectionId === 'admin-messages-list') {
+                loadAdminMessages();
+            } else if (sectionId === 'admin-settings') {
+                loadAdminSettingsForm();
+            }
+        };
+
         function loadAdminData() {
+            // Live updates for orders
             const ordersQuery = query(collection(db, 'orders'), orderBy('timestamp', 'desc'));
-            
             onSnapshot(ordersQuery, (snapshot) => {
                 let total = 0;
                 let pending = 0;
@@ -2812,84 +2906,600 @@
                 document.getElementById('pending-orders').textContent = pending;
                 document.getElementById('completed-orders').textContent = completed;
                 document.getElementById('total-revenue').textContent = 'Rs. ' + revenue;
+                
+                // Render recent orders for dashboard overview
+                const recentOrdersContainer = document.getElementById('admin-orders-recent');
+                recentOrdersContainer.innerHTML = orders.slice(0, 5).map(order => renderOrderCard(order)).join(''); // Show latest 5 orders
+                // Render full orders list
+                loadAdminOrders(orders); // Pass fetched orders to avoid refetching
+            });
 
-                const container = document.getElementById('admin-orders');
-                container.innerHTML = orders.map(order => `
-                    <div class="order-card">
-                        <div class="d-flex justify-content-between mb-3">
-                            <h5>Order #${order.orderNumber}</h5>
-                            <span class="badge bg-${order.status === 'Completed' ? 'success' : 'warning'}">${order.status}</span>
-                        </div>
-                        <p><strong>Customer:</strong> ${order.customerName}</p>
-                        <p><strong>Phone:</strong> ${order.customerPhone}</p>
-                        ${order.customerEmail ? `<p><strong>Email:</strong> ${order.customerEmail}</p>` : ''}
-                        <p><strong>Delivery Option:</strong> ${order.deliveryOption === 'delivery' ? 'Home Delivery' : 'Self Pickup'}</p>
-                        <p><strong>Address:</strong> ${order.deliveryAddress}</p>
-                        ${order.orderNotes ? `<p><strong>Notes:</strong> ${order.orderNotes}</p>` : ''}
-                        <p><strong>Date:</strong> ${order.date} at ${order.time}</p>
-                        <p><strong>Items:</strong></p>
-                        <ul>
-                            ${order.items.map(i => `<li>${i.name} x${i.quantity} (Rs. ${i.price * i.quantity})</li>`).join('')}
-                        </ul>
-                        <p><strong>Subtotal:</strong> Rs. ${order.subtotal}</p>
-                        <p><strong>Delivery:</strong> Rs. ${order.deliveryCharge}</p>
-                        <p><strong>Total:</strong> Rs. ${order.total}</p>
-                        <p><strong>Payment:</strong> ${order.paymentMethod.toUpperCase()}</p>
-                        ${order.paymentScreenshot ? `<p class="mb-2"><strong>Payment Screenshot:</strong></p><img src="${order.paymentScreenshot}" class="payment-screenshot" alt="Payment Screenshot">` : ''}
-                        ${order.status === 'Pending' ? `
-                            <button class="btn btn-success btn-sm mt-3" onclick="completeOrder('${order.id}')">
-                                <i class="fas fa-check me-2"></i>Mark Complete
-                            </button>
-                        ` : ''}
-                    </div>
-                `).join('');
+            // Live updates for bookings
+            const bookingsQuery = query(collection(db, 'bookings'), orderBy('timestamp', 'desc'));
+            onSnapshot(bookingsQuery, (snapshot) => {
+                const bookings = [];
+                snapshot.forEach(doc => bookings.push({ id: doc.id, ...doc.data() }));
+                document.getElementById('total-bookings').textContent = bookings.length;
+                loadAdminBookings(bookings); // Pass fetched bookings
+            });
+
+            // Live updates for chats (admin sees each chat document as a "message" entry)
+            const chatsQuery = query(collection(db, 'chats'), orderBy('lastMessageTimestamp', 'desc'));
+            onSnapshot(chatsQuery, (snapshot) => {
+                const messages = [];
+                let unreadCount = 0;
+                snapshot.forEach(doc => {
+                    const chat = { id: doc.id, ...doc.data() };
+                    // Check for unread messages within each chat
+                    if (chat.adminUnreadCount > 0) {
+                        unreadCount += chat.adminUnreadCount;
+                    }
+                    messages.push(chat);
+                });
+                document.getElementById('new-messages').textContent = unreadCount;
+                document.getElementById('unread-messages-badge').textContent = unreadCount;
+                loadAdminMessages(messages); // Pass fetched chats
             });
         }
 
-        window.completeOrder = async (id) => {
+        function renderOrderCard(order) {
+            return `
+                <div class="order-card mb-3 ${order.status === 'Pending' ? 'unread' : ''}">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5>Order #${order.orderNumber}</h5>
+                        <span class="badge bg-${order.status === 'Completed' ? 'success' : (order.status === 'Cancelled' ? 'danger' : 'warning')}">${order.status}</span>
+                    </div>
+                    <p><strong>Customer:</strong> ${order.customerName}</p>
+                    <p><strong>Phone:</strong> ${order.customerPhone}</p>
+                    ${order.customerEmail ? `<p><strong>Email:</strong> ${order.customerEmail}</p>` : ''}
+                    <p><strong>Delivery Option:</strong> ${order.deliveryOption === 'delivery' ? 'Home Delivery' : 'Self Pickup'}</p>
+                    <p><strong>Address:</strong> ${order.deliveryAddress}</p>
+                    ${order.orderNotes ? `<p><strong>Notes:</strong> ${order.orderNotes}</p>` : ''}
+                    <p><strong>Date:</strong> ${order.date} at ${order.time}</p>
+                    <p><strong>Items:</strong></p>
+                    <ul>
+                        ${order.items.map(i => `<li>${i.name} x${i.quantity} (Rs. ${i.price * i.quantity})</li>`).join('')}
+                    </ul>
+                    <p><strong>Subtotal:</strong> Rs. ${order.subtotal}</p>
+                    <p><strong>Delivery:</strong> Rs. ${order.deliveryCharge}</p>
+                    <p><strong>Total:</strong> Rs. ${order.total}</p>
+                    <p><strong>Payment:</strong> ${order.paymentMethod.toUpperCase()}</p>
+                    ${order.paymentScreenshot ? `<p class="mb-2"><strong>Payment Screenshot:</strong></p><img src="${order.paymentScreenshot}" class="payment-screenshot" alt="Payment Screenshot">` : ''}
+                    <div class="mt-3">
+                        ${order.status === 'Pending' ? `
+                            <button class="btn btn-success btn-sm me-2" onclick="updateOrderStatus('${order.id}', 'Completed')">
+                                <i class="fas fa-check me-2"></i>Mark Complete
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="updateOrderStatus('${order.id}', 'Cancelled')">
+                                <i class="fas fa-times me-2"></i>Cancel Order
+                            </button>
+                        ` : (order.status === 'Completed' ? `
+                            <button class="btn btn-warning btn-sm" onclick="updateOrderStatus('${order.id}', 'Pending')">
+                                <i class="fas fa-undo me-2"></i>Revert to Pending
+                            </button>
+                        ` : '')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function loadAdminOrders(orders = []) {
+            const container = document.getElementById('admin-orders-full');
+            if (orders.length === 0) {
+                container.innerHTML = `<div class="p-5 text-center text-muted">No orders found.</div>`;
+                return;
+            }
+            container.innerHTML = orders.map(order => renderOrderCard(order)).join('');
+        }
+
+        window.updateOrderStatus = async (id, newStatus) => {
             try {
-                await updateDoc(doc(db, 'orders', id), { status: 'Completed' });
-                showNotification('Order marked as completed!', 'success');
+                await updateDoc(doc(db, 'orders', id), { status: newStatus });
+                showNotification(`Order status updated to ${newStatus}!`, 'success');
             } catch (error) {
-                showNotification('Error marking order as completed: ' + error.message, 'error');
+                showNotification('Error updating order status: ' + error.message, 'error');
                 console.error("Error updating order status:", error);
             }
         };
 
+        // Menu Item Management (Admin)
+        function renderAdminMenuItems() {
+            const tableBody = document.getElementById('admin-menu-items-table');
+            tableBody.innerHTML = '';
+
+            if (menuItemsData.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4">No menu items found.</td></tr>`;
+                return;
+            }
+
+            menuItemsData.forEach(item => {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td><img src="${item.image || 'https://via.placeholder.com/80x80?text=No+Image'}" alt="${item.name}" width="50" height="50" style="object-fit: cover; border-radius: 5px;"></td>
+                        <td>${item.name}</td>
+                        <td>${item.category.replace(/-/g, ' ')}</td>
+                        <td>Rs. ${item.price}</td>
+                        <td>
+                            <button class="btn btn-sm btn-info me-2" data-bs-toggle="modal" data-bs-target="#addEditMenuItemModal" onclick="prepareMenuItemForm('${item.id}')">Edit</button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteMenuItem('${item.id}', '${item.image}')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        window.prepareMenuItemForm = (itemId = null) => {
+            const modalLabel = document.getElementById('addEditMenuItemModalLabel');
+            const form = document.getElementById('menu-item-form');
+            form.reset();
+            document.getElementById('menu-item-id').value = '';
+            document.getElementById('current-image-preview').innerHTML = ''; // Clear preview
+
+            if (itemId) {
+                modalLabel.textContent = 'Edit Menu Item';
+                const item = menuItemsData.find(i => i.id === itemId);
+                if (item) {
+                    document.getElementById('menu-item-id').value = item.id;
+                    document.getElementById('menu-item-name').value = item.name;
+                    document.getElementById('menu-item-description').value = item.description;
+                    document.getElementById('menu-item-price').value = item.price;
+                    document.getElementById('menu-item-category').value = item.category;
+                    document.getElementById('menu-item-image-url').value = item.image;
+                    if (item.image) {
+                        document.getElementById('current-image-preview').innerHTML = `Current Image: <img src="${item.image}" alt="current" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">`;
+                    }
+                }
+            } else {
+                modalLabel.textContent = 'Add New Menu Item';
+            }
+        };
+
+        async function handleMenuItemFormSubmit(e) {
+            e.preventDefault();
+            const itemId = document.getElementById('menu-item-id').value;
+            const name = document.getElementById('menu-item-name').value;
+            const description = document.getElementById('menu-item-description').value;
+            const price = parseFloat(document.getElementById('menu-item-price').value);
+            const category = document.getElementById('menu-item-category').value;
+            let imageUrl = document.getElementById('menu-item-image-url').value;
+            const imageFile = document.getElementById('menu-item-image-upload').files[0];
+
+            if (imageFile) {
+                const storageRef = ref(storage, `menu-images/${Date.now()}_${imageFile.name}`);
+                await uploadBytes(storageRef, imageFile);
+                imageUrl = await getDownloadURL(storageRef);
+            }
+
+            const itemData = {
+                name,
+                description,
+                price,
+                category,
+                image: imageUrl,
+                timestamp: serverTimestamp()
+            };
+
+            try {
+                if (itemId) {
+                    await updateDoc(doc(db, 'menuItems', itemId), itemData);
+                    showNotification('Menu item updated successfully!', 'success');
+                } else {
+                    await setDoc(doc(db, 'menuItems', Date.now().toString()), itemData); // Using timestamp as ID for new items
+                    showNotification('New menu item added successfully!', 'success');
+                }
+                bootstrap.Modal.getInstance(document.getElementById('addEditMenuItemModal')).hide();
+                document.getElementById('menu-item-form').reset();
+            } catch (error) {
+                console.error("Error saving menu item:", error);
+                showNotification('Error saving menu item: ' + error.message, 'error');
+            }
+        }
+
+        window.deleteMenuItem = async (itemId, imageUrl) => {
+            if (confirm("Are you sure you want to delete this menu item?")) {
+                try {
+                    await deleteDoc(doc(db, 'menuItems', itemId));
+                    // If the image was uploaded to Firebase Storage, delete it too
+                    if (imageUrl && imageUrl.includes("firebasestorage.googleapis.com")) {
+                        const imageRef = ref(storage, imageUrl);
+                        await deleteObject(imageRef);
+                    }
+                    showNotification('Menu item deleted successfully!', 'success');
+                } catch (error) {
+                    console.error("Error deleting menu item:", error);
+                    showNotification('Error deleting menu item: ' + error.message, 'error');
+                }
+            }
+        };
+
+        // Bookings Management (Admin)
+        function loadAdminBookings(bookings = []) {
+            const container = document.getElementById('admin-bookings-container');
+            if (bookings.length === 0) {
+                container.innerHTML = `<div class="p-5 text-center text-muted">No bookings found.</div>`;
+                return;
+            }
+            container.innerHTML = bookings.map(booking => `
+                <div class="booking-card mb-3 ${booking.status === 'Pending' ? 'unread' : ''}">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5>Booking for ${booking.name}</h5>
+                        <span class="badge bg-${booking.status === 'Confirmed' ? 'success' : (booking.status === 'Cancelled' ? 'danger' : 'warning')}">${booking.status}</span>
+                    </div>
+                    <p><strong>Phone:</strong> ${booking.phone}</p>
+                    <p><strong>Email:</strong> ${booking.email}</p>
+                    <p><strong>Date & Time:</strong> ${booking.date} at ${booking.time}</p>
+                    <p><strong>Guests:</strong> ${booking.guests}</p>
+                    ${booking.message ? `<p><strong>Requests:</strong> ${booking.message}</p>` : ''}
+                    <p><strong>Submitted:</strong> ${new Date(booking.timestamp?.toDate()).toLocaleString()}</p>
+                    <div class="mt-3">
+                        ${booking.status === 'Pending' ? `
+                            <button class="btn btn-success btn-sm me-2" onclick="updateBookingStatus('${booking.id}', 'Confirmed')">
+                                <i class="fas fa-check me-2"></i>Confirm
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="updateBookingStatus('${booking.id}', 'Cancelled')">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </button>
+                        ` : (booking.status === 'Confirmed' ? `
+                            <button class="btn btn-warning btn-sm" onclick="updateBookingStatus('${booking.id}', 'Pending')">
+                                <i class="fas fa-undo me-2"></i>Revert to Pending
+                            </button>
+                        ` : '')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.updateBookingStatus = async (id, newStatus) => {
+            try {
+                await updateDoc(doc(db, 'bookings', id), { status: newStatus });
+                showNotification(`Booking status updated to ${newStatus}!`, 'success');
+            } catch (error) {
+                showNotification('Error updating booking status: ' + error.message, 'error');
+                console.error("Error updating booking status:", error);
+            }
+        };
+
+        // User Chat / Admin Messages Management
+        let adminChatModalInstance = null; // Store Bootstrap modal instance for admin chat
+
+        function loadAdminMessages(chats = []) {
+            const container = document.getElementById('admin-messages-container');
+            if (chats.length === 0) {
+                container.innerHTML = `<div class="p-5 text-center text-muted">No customer messages.</div>`;
+                return;
+            }
+            container.innerHTML = chats.map(chat => `
+                <div class="message-card mb-3 ${chat.adminUnreadCount > 0 ? 'unread' : ''}">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5>Chat with ${chat.userName || chat.id.substring(0, 8)}</h5>
+                        ${chat.adminUnreadCount > 0 ? `<span class="badge bg-danger">${chat.adminUnreadCount} New</span>` : `<span class="badge bg-success">Read</span>`}
+                    </div>
+                    <p><strong>Last Message:</strong> ${chat.lastMessage}</p>
+                    <p class="small text-muted"><em>${new Date(chat.lastMessageTimestamp?.toDate()).toLocaleString()}</em></p>
+                    <div class="mt-3">
+                        <button class="btn btn-primary btn-sm me-2" onclick="openAdminChat('${chat.id}', '${chat.userName || chat.id.substring(0, 8)}')">
+                            <i class="fas fa-comments me-2"></i>View Chat
+                        </button>
+                        ${chat.adminUnreadCount > 0 ? `
+                            <button class="btn btn-info btn-sm" onclick="markChatAsRead('${chat.id}')">
+                                <i class="fas fa-check-double me-2"></i>Mark Read
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.openAdminChat = async (chatId, userName) => {
+            currentUserChatId = chatId;
+            document.getElementById('chat-user-name').textContent = userName;
+            
+            // Show modal
+            if (!adminChatModalInstance) {
+                adminChatModalInstance = new bootstrap.Modal(document.getElementById('adminChatModal'));
+            }
+            adminChatModalInstance.show();
+
+            const chatMessagesContainer = document.getElementById('adminChatModalBody');
+            chatMessagesContainer.innerHTML = 'Loading messages...';
+
+            // Mark all messages in this chat as read for admin
+            await updateDoc(doc(db, 'chats', chatId), { adminUnreadCount: 0 });
+
+            // Listen for real-time messages in this specific chat
+            const q = query(collection(db, 'chats', chatId, 'messages'), orderBy('timestamp'));
+            onSnapshot(q, (snapshot) => {
+                chatMessagesContainer.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const msg = doc.data();
+                    const messageClass = msg.sender === 'admin' ? 'sent' : 'received';
+                    const timestamp = msg.timestamp ? new Date(msg.timestamp.toDate()).toLocaleString() : 'Just now';
+                    chatMessagesContainer.innerHTML += `
+                        <div class="chat-message ${messageClass}">
+                            <p class="mb-0">${msg.text}</p>
+                            <small class="chat-timestamp">${timestamp}</small>
+                        </div>
+                    `;
+                });
+                chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; // Scroll to bottom
+            }, (error) => {
+                console.error("Error fetching chat messages:", error);
+                chatMessagesContainer.innerHTML = '<p class="text-danger">Error loading messages.</p>';
+            });
+        };
+
+        window.markChatAsRead = async (chatId) => {
+            try {
+                await updateDoc(doc(db, 'chats', chatId), { adminUnreadCount: 0 });
+                showNotification('Chat marked as read!', 'success');
+            } catch (error) {
+                showNotification('Error marking chat as read: ' + error.message, 'error');
+                console.error("Error marking chat as read:", error);
+            }
+        };
+
+        async function sendAdminMessage() {
+            const input = document.getElementById('adminChatInput');
+            const messageText = input.value.trim();
+            if (messageText && currentUserChatId) {
+                try {
+                    await addDoc(collection(db, 'chats', currentUserChatId, 'messages'), {
+                        sender: 'admin',
+                        text: messageText,
+                        timestamp: serverTimestamp(),
+                        isReadByUser: false // Admin messages are unread by user initially
+                    });
+                    // Update last message in parent chat document
+                    await updateDoc(doc(db, 'chats', currentUserChatId), {
+                        lastMessage: messageText,
+                        lastMessageTimestamp: serverTimestamp(),
+                        userUnreadCount: arrayUnion(true) // Mark as unread for the user
+                    });
+                    input.value = '';
+                } catch (error) {
+                    showNotification('Error sending message: ' + error.message, 'error');
+                    console.error("Error sending admin message:", error);
+                }
+            }
+        }
+
+        let userChatId = localStorage.getItem('userChatId'); // Store unique chat ID for user
+        let userChatName = localStorage.getItem('userChatName'); // Store user's name for chat
+
+        async function setupUserChat() {
+            const userChatMessagesContainer = document.getElementById('user-chat-messages');
+            userChatMessagesContainer.innerHTML = 'Loading chat...';
+
+            if (!userChatId) {
+                // Prompt user for name if not already stored
+                userChatName = prompt("Please enter your name for the chat:");
+                if (!userChatName) {
+                    userChatName = "Guest " + Math.random().toString(36).substring(2, 10); // Anonymous if no name given
+                }
+                localStorage.setItem('userChatName', userChatName);
+
+                // Create a new chat document in 'chats' collection
+                const newChatRef = await addDoc(collection(db, 'chats'), {
+                    userName: userChatName,
+                    lastMessage: "New chat started.",
+                    lastMessageTimestamp: serverTimestamp(),
+                    adminUnreadCount: 1, // Admin has one unread message (the "chat started" one)
+                    userUnreadCount: []
+                });
+                userChatId = newChatRef.id;
+                localStorage.setItem('userChatId', userChatId);
+
+                // Add initial message to subcollection
+                await addDoc(collection(db, 'chats', userChatId, 'messages'), {
+                    sender: 'user',
+                    text: 'Hello, I have a question.', // Or an empty starter message
+                    timestamp: serverTimestamp(),
+                    isReadByAdmin: false
+                });
+
+                // Send auto-reply if set
+                if (autoReplyMessage) {
+                    await addDoc(collection(db, 'chats', userChatId, 'messages'), {
+                        sender: 'admin',
+                        text: autoReplyMessage,
+                        timestamp: serverTimestamp(),
+                        isReadByUser: false
+                    });
+                     await updateDoc(doc(db, 'chats', userChatId), {
+                        lastMessage: autoReplyMessage, // Update last message to auto-reply
+                        lastMessageTimestamp: serverTimestamp(),
+                        userUnreadCount: arrayUnion(true) // Auto-reply is unread by user
+                    });
+                }
+            } else {
+                // If userChatId exists, mark all admin messages in this chat as read by the user
+                const chatRef = doc(db, 'chats', userChatId);
+                await updateDoc(chatRef, { userUnreadCount: [] });
+            }
+
+            // Listen for messages in the user's chat
+            const q = query(collection(db, 'chats', userChatId, 'messages'), orderBy('timestamp'));
+            onSnapshot(q, (snapshot) => {
+                userChatMessagesContainer.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const msg = doc.data();
+                    const messageClass = msg.sender === 'user' ? 'sent' : 'received';
+                    const timestamp = msg.timestamp ? new Date(msg.timestamp.toDate()).toLocaleString() : 'Just now';
+                    userChatMessagesContainer.innerHTML += `
+                        <div class="chat-message ${messageClass}">
+                            <p class="mb-0">${msg.text}</p>
+                            <small class="chat-timestamp">${timestamp}</small>
+                        </div>
+                    `;
+                });
+                userChatMessagesContainer.scrollTop = userChatMessagesContainer.scrollHeight; // Scroll to bottom
+            }, (error) => {
+                console.error("Error fetching user chat messages:", error);
+                userChatMessagesContainer.innerHTML = '<p class="text-danger">Error loading chat.</p>';
+            });
+        }
+
+        async function sendUserMessage() {
+            const input = document.getElementById('userChatMessageInput');
+            const messageText = input.value.trim();
+            if (messageText && userChatId) {
+                try {
+                    await addDoc(collection(db, 'chats', userChatId, 'messages'), {
+                        sender: 'user',
+                        text: messageText,
+                        timestamp: serverTimestamp(),
+                        isReadByAdmin: false // User messages are unread by admin initially
+                    });
+                    // Update last message in parent chat document and increment admin unread count
+                    const chatRef = doc(db, 'chats', userChatId);
+                    await updateDoc(chatRef, {
+                        lastMessage: messageText,
+                        lastMessageTimestamp: serverTimestamp(),
+                        adminUnreadCount: arrayUnion(true) // Increment adminUnreadCount
+                    });
+                    input.value = '';
+                } catch (error) {
+                    showNotification('Error sending message: ' + error.message, 'error');
+                    console.error("Error sending user message:", error);
+                }
+            }
+        }
+
+
+        // Admin Settings Functions
+        async function loadAdminSettingsForm() {
+            const settingsDocRef = doc(db, 'settings', 'websiteSettings');
+            const docSnap = await getDoc(settingsDocRef);
+            if (docSnap.exists()) {
+                const settings = docSnap.data();
+                const contact = settings.contactNumbers || {};
+                const payment = settings.paymentDetails || {};
+
+                document.getElementById('setting-whatsapp-num').value = contact.whatsapp || '';
+                document.getElementById('setting-call-num').value = contact.call || '';
+                document.getElementById('setting-sms-num').value = contact.sms || '';
+
+                document.getElementById('setting-jazzcash-num').value = payment.jazzcash || '';
+                document.getElementById('setting-easypaisa-num').value = payment.easypaisa || '';
+                document.getElementById('setting-bank-acc-no').value = payment.bankAccNo || '';
+                document.getElementById('setting-bank-acc-holder').value = payment.bankAccHolder || '';
+                document.getElementById('setting-bank-name').value = payment.bankName || '';
+
+                document.getElementById('setting-auto-reply').value = settings.autoReplyMessage || '';
+            }
+        }
+
+        async function saveContactNumbers(e) {
+            e.preventDefault();
+            const whatsapp = document.getElementById('setting-whatsapp-num').value;
+            const call = document.getElementById('setting-call-num').value;
+            const sms = document.getElementById('setting-sms-num').value;
+
+            try {
+                await setDoc(doc(db, 'settings', 'websiteSettings'), {
+                    contactNumbers: { whatsapp, call, sms }
+                }, { merge: true }); // Use merge to only update this part of the document
+                showNotification('Contact numbers saved!', 'success');
+                await loadSettings(); // Reload frontend settings
+            } catch (error) {
+                showNotification('Error saving contact numbers: ' + error.message, 'error');
+                console.error("Error saving contact numbers:", error);
+            }
+        }
+
+        async function savePaymentDetails(e) {
+            e.preventDefault();
+            const jazzcash = document.getElementById('setting-jazzcash-num').value;
+            const easypaisa = document.getElementById('setting-easypaisa-num').value;
+            const bankAccNo = document.getElementById('setting-bank-acc-no').value;
+            const bankAccHolder = document.getElementById('setting-bank-acc-holder').value;
+            const bankName = document.getElementById('setting-bank-name').value;
+
+            try {
+                await setDoc(doc(db, 'settings', 'websiteSettings'), {
+                    paymentDetails: { jazzcash, easypaisa, bankAccNo, bankAccHolder, bankName }
+                }, { merge: true });
+                showNotification('Payment details saved!', 'success');
+                await loadSettings(); // Reload frontend settings
+            } catch (error) {
+                showNotification('Error saving payment details: ' + error.message, 'error');
+                console.error("Error saving payment details:", error);
+            }
+        }
+
+        async function saveAutoReplyMessage(e) {
+            e.preventDefault();
+            const autoReply = document.getElementById('setting-auto-reply').value;
+
+            try {
+                await setDoc(doc(db, 'settings', 'websiteSettings'), {
+                    autoReplyMessage: autoReply
+                }, { merge: true });
+                showNotification('Auto-reply message saved!', 'success');
+                await loadSettings(); // Reload frontend settings
+            } catch (error) {
+                showNotification('Error saving auto-reply message: ' + error.message, 'error');
+                console.error("Error saving auto-reply message:", error);
+            }
+        }
+
+        // Utility functions
         window.scrollToMenu = () => {
             document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
         };
 
-        window.openWhatsApp = () => {
-            window.open('https://wa.me/923188791637?text=Hello! I want to order from Zaytoon Garden', '_blank');
+        window.openDirectWhatsApp = () => {
+            const whatsappNum = frontendContactNumbers.whatsapp || '923188791637'; // Fallback
+            window.open(`https://wa.me/${whatsappNum}`, '_blank');
         };
 
         window.makeCall = () => {
-            window.location.href = 'tel:+923188791637';
+            const callNum = frontendContactNumbers.call || '923188791637'; // Fallback
+            window.open(`tel:${callNum}`);
         };
 
         window.sendSMS = () => {
-            window.location.href = 'sms:+923188791637?body=Hello Zaytoon Garden';
+            const smsNum = frontendContactNumbers.sms || '923188791637'; // Fallback
+            window.open(`sms:${smsNum}`);
         };
 
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification-toast ${type === 'success' ? 'border-success' : 'border-danger'}`;
-            notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}" style="font-size: 1.5rem; color: var(--${type === 'success' ? 'success' : 'danger'});"></i>
-                <div>
-                    <strong>${type === 'success' ? 'Success!' : 'Error!'}</strong>
-                    <p class="mb-0">${message}</p>
-                </div>
-            `;
-            document.body.appendChild(notification);
+        window.copyToClipboard = (elementId) => {
+            const textToCopy = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    showNotification('Copied to clipboard!', 'success');
+                })
+                .catch(err => {
+                    showNotification('Failed to copy text: ' + err, 'error');
+                });
+        };
+
+        function showNotification(message, type) {
+            const container = document.body;
+            const toast = document.createElement('div');
+            toast.className = `notification-toast alert alert-${type} d-flex align-items-center`;
+            toast.setAttribute('role', 'alert');
+
+            let icon = '';
+            if (type === 'success') {
+                icon = '<i class="fas fa-check-circle me-2"></i>';
+            } else if (type === 'error') {
+                icon = '<i class="fas fa-times-circle me-2"></i>';
+            } else if (type === 'info') {
+                icon = '<i class="fas fa-info-circle me-2"></i>';
+            } else if (type === 'warning') {
+                icon = '<i class="fas fa-exclamation-triangle me-2"></i>';
+            }
+
+            toast.innerHTML = `${icon}<div>${message}</div>`;
+            container.appendChild(toast);
 
             setTimeout(() => {
-                notification.style.opacity = '0';
-                setTimeout(() => notification.remove(), 400); // Remove after fade out
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 500);
             }, 3000);
         }
+
     </script>
 </body>
 </html>
-
